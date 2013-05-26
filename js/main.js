@@ -113,6 +113,7 @@ var MadMinute = {
 	init: function() {
 		this.cacheElements();
 		this.bindEvents();
+		this.getRepoInformation();
 		this.render();
 	},
 	cacheElements: function() {
@@ -140,6 +141,7 @@ var MadMinute = {
 		this.$count = $("#quiz-count");
 		this.$print = $("#print-worksheet");
 		this.$del = $("#delete-worksheet");
+		this.$bugs = $("#bugs");
 		//all the available keys
 		this.allKeys = ['Cb', 'Gb', 'Db', 'Ab', 'Eb', 'Bb', 'F', 'C', 'G', 'D', 'A', 'E', 'B', 'F#', 'C#']
 		//all key selections in booleans map to this.allKeys
@@ -150,6 +152,7 @@ var MadMinute = {
 		this.bassRange = new MadMinuteUtlities.Range(['E1','F1','G1','A1','B1','C2', 'D2', 'E2', 'F2', 'G2', 'A2', 'B2', 'C3', 'D3', 'E3','F3','G3','A3','B3','C4','D4','E4','F4','G4','A4','B4','C5']);
 		this.tenorRange = new MadMinuteUtlities.Range(['C3', 'D3', 'E3', 'F3', 'G3', 'A3', 'B3', 'C4', 'D4', 'E4','F4','G4','A4','B3','C4','D4','E4','F4','G4','A4','B4','C5']);
 		this.altoRange = new MadMinuteUtlities.Range(['C3', 'D3', 'E3', 'F3', 'G3', 'A3', 'B3', 'C4', 'D4', 'E4','F4','G4','A4','B4','C5','D5','E5','F5','G5','A5','B5','C6']);
+		this.bugCount = 0;
 	},
 	bindEvents: function() {
 		this.$print.click(function() {
@@ -267,6 +270,33 @@ var MadMinute = {
 				$("#row" + i).append("<div class='layout-square off' data-row='"+ i +"' data-column='" + x + "'></div>");
 			}
 		}
+	},
+	getRepoInformation: function() {
+		$.ajax({
+		  url: "https://api.github.com/repos/smykes/Mad-Minute-Music/issues",
+		  dataType: "jsonp",
+		  success: function(data) {
+		  	for (var i = 0; i < data.data.length; i++ ) {
+		  		$("#issue-list").append('<li><a href="' +data.data[i].html_url +'">' + data.data[i].title + '</a></li>');
+		  	}
+		  	MadMinute.bugCount = data.data.length;
+		  		$("#bugs").html(MadMinute.bugCount);
+		  }, 
+		  error: function(data) {
+		  	alert("There was an error contacting the Github server.");
+		  }});
+		$.ajax({
+		  url: "https://api.github.com/repos/smykes/Mad-Minute-Music/commits",
+		  dataType: "jsonp",
+		  success: function(data) {
+		  	for (var i = 0; i < data.data.length; i++) {
+		  		console.log(data.data[i].commit);
+		  		$("#change-list").append('<li><span class="label label-success">' + moment(data.data[i].author.date).format("MM/DD/YYYY") + '</span> - ' + data.data[i].commit.message + '</li>')
+		  	}
+		  }, 
+		  error: function(data) {
+		  	alert("There was an error contacting the Github server.");
+		  }});
 	},
 	renderQuiz: function() {
 		$('#notes').empty();

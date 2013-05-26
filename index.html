@@ -27,7 +27,7 @@
                         <ul class="nav" id="myTab">
                           <li class="active"><a href="#main" data-toggle="pill">Create</a></li>
                           <li><a href="#about" data-toggle="pill">About</a></li>
-                          <li><a href="#changes" data-toggle="pill">Changes/Bugs <span class="badge badge-success">2</span></a></li>
+                          <li><a href="#changes" data-toggle="pill">Changes/Bugs <span class="badge badge-success" id="bugs"></span></a></li>
                           <li><a href="#contact" data-toggle="pill">Contact </a></li>
                         </ul>
                     </div>
@@ -180,57 +180,12 @@
                 <div class="row">
                     <div class="span6">
                         <h3>Change Log</h3>
-                         <span class="label label-success">Version 0.3.1</span> 
-                        <small>5/26/2013</small>
-                        <ul>
-                            <li>Fixed bass range to accomodate Tuba.  Now goes to Eb1.</li>
-                            <li>Some basic unit tests added.  This is a work in progress.</li>
-                        </ul>
-                        <span class="label label-success">Version 0.3</span> 
-                        <small>5/21/2013</small>
-                        <ul>
-                            <li>Added a proper contact form.</li>
-                        </ul>
-                        <span class="label label-success">Version 0.3</span> 
-                        <small>5/18/2013</small>
-                        <ul>
-                            <li>All notes are whole notes now.</li>
-                            <li>Tab issues should be fixed.</li>
-                            <li>Spacing issues have been resolved.</li>
-                            <li>Maxmimum of 60 questions now due to space constraints.</li>
-                        </ul>
-                        <span class="label label-success">Version 0.2.2</span> 
-                        <small>5/17/2013</small>
-                        <ul>
-                            <li>Print button and delete icon added to the worksheet screen.</li>
-                            <li>Print stylesheet added so only worksheet portion prints.</li>
-                            <li>Added contact methods to the about page</li>
-                        </ul>
-                        <span class="label label-success">Version 0.2.1</span> 
-                        <small>5/12/2013</small>
-                        <ul>
-                            <li>Bug where notes page wasn't appearing is now fixed.</li>
-                            <li>Changes and known issues are now split into two columns.</li>
-                            <li>Shortened text on clef option buttons</li>
-                            <li>Fixed bug where the form had scroll bars</li>
-                            <li>Added real text to 'About' section</li>
-
-                        </ul>
-                        <span class="label label-success">Version 0.2</span> 
-                        <small>5/11/2013</small>
-                        <ul>
-                            <li>Tabs now work</li>
-                            <li>Change list added</li>
-                            <li>Known issues added</li>
-                            <li>About added</li>
-                            <li>Restructurig of HTML</li>
-                            <li>Removed responsive layout</li>
-                        </ul>
+                        <ul id="change-list"></ul>
                     </div>
                     <div class="span6">
                         <h3>Known Issues</h3>
-                        <ul>
-                            <li>Selecting the same note for low and high range causes problems</li>
+                        <ul id="issue-list">
+                            
                         </ul>
                     </div>
                 </div>
