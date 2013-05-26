@@ -284,19 +284,20 @@ var MadMinute = {
 		  }, 
 		  error: function(data) {
 		  	alert("There was an error contacting the Github server.");
-		  }});
+		  }
+		});
 		$.ajax({
 		  url: "https://api.github.com/repos/smykes/Mad-Minute-Music/commits",
 		  dataType: "jsonp",
 		  success: function(data) {
 		  	for (var i = 0; i < data.data.length; i++) {
-		  		console.log(data.data[i].commit);
 		  		$("#change-list").append('<li><span class="label label-success">' + moment(data.data[i].author.date).format("MM/DD/YYYY") + '</span> - ' + data.data[i].commit.message + '</li>')
 		  	}
 		  }, 
 		  error: function(data) {
 		  	alert("There was an error contacting the Github server.");
-		  }});
+		  }
+		});
 	},
 	renderQuiz: function() {
 		$('#notes').empty();
