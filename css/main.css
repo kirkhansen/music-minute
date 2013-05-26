@@ -1,0 +1,26 @@
+body {
+padding-top: 60px;
+padding-bottom: 40px;
+}
+#layout input { margin-right: 40px; margin-bottom: 20px;}
+#toggle-all {float: right; margin-right: 35px;}
+.layout-square { border: 1px solid #bcbcbc; width: 20px; height: 20px; float: left;margin-right: 62px; margin-bottom: 10px; box-shadow: inset 0 0 2px #000000; cursor: crosshair;}
+.layout-square:hover { border-style: solid;}
+.trebleShade { background : #0044CC;}
+.bassShade { background: #51A351;}
+.altoShade { background: #F89406;}
+.tenorShade { background: #BB352E;}
+.qnote {float: left; width: 140px; height: 100px; margin: 7px;}
+
+
+
+
+
+
+
+
+
+
+
+
+
