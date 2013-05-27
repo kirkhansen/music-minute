@@ -11,6 +11,7 @@ padding-bottom: 40px;
 .altoShade { background: #F89406;}
 .tenorShade { background: #BB352E;}
 .qnote {float: left; width: 140px; height: 100px; margin: 7px;}
+.unstyled li {padding-top: 5px; }
 
 
 

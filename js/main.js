@@ -161,6 +161,7 @@ var MadMinute = {
 		this.$del.click(function() {
 			MadMinute.$notes.empty().hide();
 			$('#controls').hide();
+			$('.nav li').show();
 			$("#form, .tab-content").show();
 		});
 		this.$treble.click(function() {
@@ -304,6 +305,7 @@ var MadMinute = {
 		$('#notes').show();
 		$('#controls').show();
 		$("#form, .tab-content").hide();
+		$("ul.nav li").hide();
 
 		var noteArray = [];
 		var key;
