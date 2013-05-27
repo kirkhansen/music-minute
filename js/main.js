@@ -292,7 +292,7 @@ var MadMinute = {
 		  dataType: "jsonp",
 		  success: function(data) {
 		  	for (var i = 0; i < data.data.length; i++) {
-		  		$("#change-list").append('<li><span class="label label-success">' + moment(data.data[i].author.date).format("MM/DD/YYYY") + '</span> - ' + data.data[i].commit.message + '</li>')
+		  		$("#change-list").append('<li><span class="label label-success">' + moment(data.data[i].commit.author.date).format("MM/DD/YYYY") + '</span> - ' + data.data[i].commit.message + '</li>')
 		  	}
 		  }, 
 		  error: function(data) {
