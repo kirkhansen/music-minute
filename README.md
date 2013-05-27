@@ -29,4 +29,4 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 
-This software has no connection with http://www.madminutemusic.com, however; it's probably debatable who has been using the name longer.  Please do not claim this idea or code to be yours, if you do end up hosting this somewhere (I would prefer you use my hosted version) credit me please.
+This software has no connection with http://www.madminutemusic.com, however; it's probably debatable who has been using the name longer.  Please do not claim this idea or code to be yours, if you do end up hosting this somewhere (I would prefer you use my hosted version) credit me please.  You should also probably rip out a lot of the extraneous stuff, like the about, and bugs and issues pages.
