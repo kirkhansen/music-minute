@@ -142,6 +142,7 @@ var MadMinute = {
 		this.$print = $("#print-worksheet");
 		this.$del = $("#delete-worksheet");
 		this.$bugs = $("#bugs");
+		this.$clefSelect = $(".clefSelect");
 		//all the available keys
 		this.allKeys = ['Cb', 'Gb', 'Db', 'Ab', 'Eb', 'Bb', 'F', 'C', 'G', 'D', 'A', 'E', 'B', 'F#', 'C#']
 		//all key selections in booleans map to this.allKeys
@@ -164,39 +165,35 @@ var MadMinute = {
 			$('.nav li').show();
 			$("#form, .tab-content").show();
 		});
-		this.$treble.click(function() {
-			MadMinute.$trebleRange.toggle();
-			MadMinuteUtlities.populateClef('treble', null, 'low');
-			MadMinuteUtlities.populateClef('treble', null, 'high');
-			if (MadMinute.$treble.hasClass('active')) {
-				$(".layout-square").removeClass('trebleShade').addClass('off');
-				MadMinute.updateCount();
+		this.$clefSelect.click(function() {
+			var correspondingSelector, clef, shade;
+			switch (this.id) {
+				case 'treble-button':
+				correspondingSelector = MadMinute.$trebleRange;
+				clef = 'treble';
+				shade = 'trebleShade';
+				break;
+				case 'bass-button':
+				correspondingSelector = MadMinute.$bassRange;
+				clef = 'bass';
+				shade = 'bassShade';
+				break;
+				case 'alto-button':
+				correspondingSelector = MadMinute.$altoRange;
+				clef = 'alto';
+				shade = 'altoShade';
+				break;
+				case 'tenor-button':
+				clef = 'tenor';
+				shade = 'tenorShade';
+				correspondingSelector = MadMinute$tenorRange;
+				break;
 			}
-		});
-		this.$bass.click(function() {
-			MadMinute.$bassRange.toggle();
-			MadMinuteUtlities.populateClef('bass', null, 'low');
-			MadMinuteUtlities.populateClef('bass', null, 'high');
-			if (MadMinute.$bass.hasClass('active')) {
-				$(".layout-square").removeClass('bassShade').addClass('off');
-				MadMinute.updateCount();
-			}
-		});
-		this.$alto.click(function() {
-			MadMinute.$altoRange.toggle();
-			MadMinuteUtlities.populateClef('alto', null, 'low');
-			MadMinuteUtlities.populateClef('alto', null, 'high');
-			if (MadMinute.$alto.hasClass('active')) {
-				$(".layout-square").removeClass('altoShade').addClass('off');
-				MadMinute.updateCount();
-			}
-		});
-		this.$tenor.click(function() {
-			MadMinute.$tenorRange.toggle();
-			MadMinuteUtlities.populateClef('tenor', null, 'low');
-			MadMinuteUtlities.populateClef('tenor', null, 'high');
-			if (MadMinute.$tenor.hasClass('active')) {
-				$(".layout-square").removeClass('tenorShade').addClass('off');
+			correspondingSelector.toggle();
+			MadMinuteUtlities.populateClef(clef, null, 'low');
+			MadMinuteUtlities.populateClef(clef, null, 'high');
+			if ($(this).hasClass('active')) {
+				$(".layout-square").removeClass(shade).addClass('off');
 				MadMinute.updateCount();
 			}
 		});
