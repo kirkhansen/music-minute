@@ -480,5 +480,184 @@ test("Bass range returns", function() {
   propEqual(MadMinuteUtlities.findModifiedRange('A4', MadMinute.bassRange.range), ['A4','B4','C5'], "A4 - Correct range returned: A4 - C5" )
   propEqual(MadMinuteUtlities.findModifiedRange('B4', MadMinute.bassRange.range), ['B4','C5'], "B4 - Correct range returned: B4 - C5" )
   propEqual(MadMinuteUtlities.findModifiedRange('C5', MadMinute.bassRange.range), ['C5'], "C5 - Correct range returned: C5 - C5" )
-
 });
+
+test("Alto range returns", function() {
+  propEqual(MadMinuteUtlities.findModifiedRange(null, MadMinute.altoRange.range), ['C3','D3','E3','F3','G3','A3','B3','C4','D4','E4','F4','G4','A4','B4','C5','D5','E5','F5','G5','A5','B5','C6'], "Null - Correct range returned C3 - C6" )
+  propEqual(MadMinuteUtlities.findModifiedRange('C3', MadMinute.altoRange.range), ['C3','D3','E3','F3','G3','A3','B3','C4','D4','E4','F4','G4','A4','B4','C5','D5','E5','F5','G5','A5','B5','C6'], "C3 - Correct range returned C3 - C6" )
+  propEqual(MadMinuteUtlities.findModifiedRange('D3', MadMinute.altoRange.range), ['D3','E3','F3','G3','A3','B3','C4','D4','E4','F4','G4','A4','B4','C5','D5','E5','F5','G5','A5','B5','C6'], "D3 - Correct range returned D3 - C6" )
+  propEqual(MadMinuteUtlities.findModifiedRange('E3', MadMinute.altoRange.range), ['E3','F3','G3','A3','B3','C4','D4','E4','F4','G4','A4','B4','C5','D5','E5','F5','G5','A5','B5','C6'], "E3 - Correct range returned E3 - C6" )
+  propEqual(MadMinuteUtlities.findModifiedRange('F3', MadMinute.altoRange.range), ['F3','G3','A3','B3','C4','D4','E4','F4','G4','A4','B4','C5','D5','E5','F5','G5','A5','B5','C6'], "F3 - Correct range returned F3 - C6" )
+  propEqual(MadMinuteUtlities.findModifiedRange('G3', MadMinute.altoRange.range), ['G3','A3','B3','C4','D4','E4','F4','G4','A4','B4','C5','D5','E5','F5','G5','A5','B5','C6'], "G3 - Correct range returned G3 - C6" )
+  propEqual(MadMinuteUtlities.findModifiedRange('A3', MadMinute.altoRange.range), ['A3','B3','C4','D4','E4','F4','G4','A4','B4','C5','D5','E5','F5','G5','A5','B5','C6'], "A3 - Correct range returned A3- C6" )
+  propEqual(MadMinuteUtlities.findModifiedRange('B3', MadMinute.altoRange.range), ['B3','C4','D4','E4','F4','G4','A4','B4','C5','D5','E5','F5','G5','A5','B5','C6'], "B3 - Correct range returned B3 - C6" )
+  propEqual(MadMinuteUtlities.findModifiedRange('C4', MadMinute.altoRange.range), ['C4','D4','E4','F4','G4','A4','B4','C5','D5','E5','F5','G5','A5','B5','C6'], "C4 - Correct range returned C4 - C6" )
+  propEqual(MadMinuteUtlities.findModifiedRange('D4', MadMinute.altoRange.range), ['D4','E4','F4','G4','A4','B4','C5','D5','E5','F5','G5','A5','B5','C6'], "D4 - Correct range returned D4 - C6" )
+  propEqual(MadMinuteUtlities.findModifiedRange('E4', MadMinute.altoRange.range), ['E4','F4','G4','A4','B4','C5','D5','E5','F5','G5','A5','B5','C6'], "E4 - Correct range returned E4 - C6" )
+  propEqual(MadMinuteUtlities.findModifiedRange('F4', MadMinute.altoRange.range), ['F4','G4','A4','B4','C5','D5','E5','F5','G5','A5','B5','C6'], "F4 - Correct range returned F4 - C6" )
+  propEqual(MadMinuteUtlities.findModifiedRange('G4', MadMinute.altoRange.range), ['G4','A4','B4','C5','D5','E5','F5','G5','A5','B5','C6'], "G4 - Correct range returned G4 - C6" )
+  propEqual(MadMinuteUtlities.findModifiedRange('A4', MadMinute.altoRange.range), ['A4','B4','C5','D5','E5','F5','G5','A5','B5','C6'], "A4 - Correct range returned A4 - C6" )
+  propEqual(MadMinuteUtlities.findModifiedRange('B4', MadMinute.altoRange.range), ['B4','C5','D5','E5','F5','G5','A5','B5','C6'], "B4 - Correct range returned B4 - C6" )
+  propEqual(MadMinuteUtlities.findModifiedRange('C5', MadMinute.altoRange.range), ['C5','D5','E5','F5','G5','A5','B5','C6'], "C5 - Correct range returned C5 - C6" )
+  propEqual(MadMinuteUtlities.findModifiedRange('D5', MadMinute.altoRange.range), ['D5','E5','F5','G5','A5','B5','C6'], "D5 - Correct range returned D5 - C6" )
+  propEqual(MadMinuteUtlities.findModifiedRange('E5', MadMinute.altoRange.range), ['E5','F5','G5','A5','B5','C6'], "E5 - Correct range returned E5 - C6" )
+  propEqual(MadMinuteUtlities.findModifiedRange('F5', MadMinute.altoRange.range), ['F5','G5','A5','B5','C6'], "F5 - Correct range returned F5- C6" )
+  propEqual(MadMinuteUtlities.findModifiedRange('G5', MadMinute.altoRange.range), ['G5','A5','B5','C6'], "G5 - Correct range returned G5 - C6" )
+  propEqual(MadMinuteUtlities.findModifiedRange('A5', MadMinute.altoRange.range), ['A5','B5','C6'], "A5 - Correct range returned A5 - C6" )
+  propEqual(MadMinuteUtlities.findModifiedRange('B5', MadMinute.altoRange.range), ['B5','C6'], "B5 - Correct range returned B5 - C6" )
+  propEqual(MadMinuteUtlities.findModifiedRange('C6', MadMinute.altoRange.range), ['C6'], "C6 - Correct range returned C6 - C6" )
+});
+
+test("Tenor range returns", function() {
+  propEqual(MadMinuteUtlities.findModifiedRange(null, MadMinute.tenorRange.range), ['C3','D3','E3','F3','G3','A3','B3','C4','D4','E4','F4','G4','A4','B4','C5','D5','E5','F5','G5','A5','B5','C6'], "Null - Correct range returned C3 - C6" )
+  propEqual(MadMinuteUtlities.findModifiedRange('C3', MadMinute.tenorRange.range), ['C3','D3','E3','F3','G3','A3','B3','C4','D4','E4','F4','G4','A4','B4','C5','D5','E5','F5','G5','A5','B5','C6'], "C3 - Correct range returned C3 - C6" )
+  propEqual(MadMinuteUtlities.findModifiedRange('D3', MadMinute.tenorRange.range), ['D3','E3','F3','G3','A3','B3','C4','D4','E4','F4','G4','A4','B4','C5','D5','E5','F5','G5','A5','B5','C6'], "D3 - Correct range returned D3 - C6" )
+  propEqual(MadMinuteUtlities.findModifiedRange('E3', MadMinute.tenorRange.range), ['E3','F3','G3','A3','B3','C4','D4','E4','F4','G4','A4','B4','C5','D5','E5','F5','G5','A5','B5','C6'], "E3 - Correct range returned E3 - C6" )
+  propEqual(MadMinuteUtlities.findModifiedRange('F3', MadMinute.tenorRange.range), ['F3','G3','A3','B3','C4','D4','E4','F4','G4','A4','B4','C5','D5','E5','F5','G5','A5','B5','C6'], "F3 - Correct range returned F3 - C6" )
+  propEqual(MadMinuteUtlities.findModifiedRange('G3', MadMinute.tenorRange.range), ['G3','A3','B3','C4','D4','E4','F4','G4','A4','B4','C5','D5','E5','F5','G5','A5','B5','C6'], "G3 - Correct range returned G3 - C6" )
+  propEqual(MadMinuteUtlities.findModifiedRange('A3', MadMinute.tenorRange.range), ['A3','B3','C4','D4','E4','F4','G4','A4','B4','C5','D5','E5','F5','G5','A5','B5','C6'], "A3 - Correct range returned A3- C6" )
+  propEqual(MadMinuteUtlities.findModifiedRange('B3', MadMinute.tenorRange.range), ['B3','C4','D4','E4','F4','G4','A4','B4','C5','D5','E5','F5','G5','A5','B5','C6'], "B3 - Correct range returned B3 - C6" )
+  propEqual(MadMinuteUtlities.findModifiedRange('C4', MadMinute.tenorRange.range), ['C4','D4','E4','F4','G4','A4','B4','C5','D5','E5','F5','G5','A5','B5','C6'], "C4 - Correct range returned C4 - C6" )
+  propEqual(MadMinuteUtlities.findModifiedRange('D4', MadMinute.tenorRange.range), ['D4','E4','F4','G4','A4','B4','C5','D5','E5','F5','G5','A5','B5','C6'], "D4 - Correct range returned D4 - C6" )
+  propEqual(MadMinuteUtlities.findModifiedRange('E4', MadMinute.tenorRange.range), ['E4','F4','G4','A4','B4','C5','D5','E5','F5','G5','A5','B5','C6'], "E4 - Correct range returned E4 - C6" )
+  propEqual(MadMinuteUtlities.findModifiedRange('F4', MadMinute.tenorRange.range), ['F4','G4','A4','B4','C5','D5','E5','F5','G5','A5','B5','C6'], "F4 - Correct range returned F4 - C6" )
+  propEqual(MadMinuteUtlities.findModifiedRange('G4', MadMinute.tenorRange.range), ['G4','A4','B4','C5','D5','E5','F5','G5','A5','B5','C6'], "G4 - Correct range returned G4 - C6" )
+  propEqual(MadMinuteUtlities.findModifiedRange('A4', MadMinute.tenorRange.range), ['A4','B4','C5','D5','E5','F5','G5','A5','B5','C6'], "A4 - Correct range returned A4 - C6" )
+  propEqual(MadMinuteUtlities.findModifiedRange('B4', MadMinute.tenorRange.range), ['B4','C5','D5','E5','F5','G5','A5','B5','C6'], "B4 - Correct range returned B4 - C6" )
+  propEqual(MadMinuteUtlities.findModifiedRange('C5', MadMinute.tenorRange.range), ['C5','D5','E5','F5','G5','A5','B5','C6'], "C5 - Correct range returned C5 - C6" )
+  propEqual(MadMinuteUtlities.findModifiedRange('D5', MadMinute.tenorRange.range), ['D5','E5','F5','G5','A5','B5','C6'], "D5 - Correct range returned D5 - C6" )
+  propEqual(MadMinuteUtlities.findModifiedRange('E5', MadMinute.tenorRange.range), ['E5','F5','G5','A5','B5','C6'], "E5 - Correct range returned E5 - C6" )
+  propEqual(MadMinuteUtlities.findModifiedRange('F5', MadMinute.tenorRange.range), ['F5','G5','A5','B5','C6'], "F5 - Correct range returned F5- C6" )
+  propEqual(MadMinuteUtlities.findModifiedRange('G5', MadMinute.tenorRange.range), ['G5','A5','B5','C6'], "G5 - Correct range returned G5 - C6" )
+  propEqual(MadMinuteUtlities.findModifiedRange('A5', MadMinute.tenorRange.range), ['A5','B5','C6'], "A5 - Correct range returned A5 - C6" )
+  propEqual(MadMinuteUtlities.findModifiedRange('B5', MadMinute.tenorRange.range), ['B5','C6'], "B5 - Correct range returned B5 - C6" )
+  propEqual(MadMinuteUtlities.findModifiedRange('C6', MadMinute.tenorRange.range), ['C6'], "C6 - Correct range returned C6 - C6" )
+});
+
+//Should I test whether the selects are populated correctly?
+
+module("Note Layout", {
+    setup: function () {
+      $("#qunit-fixture").append('<div class="tab-content container">'+
+           '<div class="tab-pane active" id="main">'+
+                '<div id="form" class="container">'+
+                        '<div class="span4">'+
+                            '<h2 class="span4">Notes</h2>'+
+                            '<h4 class="span4">Choose a clef</h4>'+
+                            '<div class="row span4">'+
+                                '<div class="btn-group controls-row" data-toggle="buttons-checkbox">'+
+                                    '<button id="treble-button" type="button" class="btn btn-primary clefSelect">Treble</button>'+
+                                    '<button id="bass-button" type="button" class="btn btn-success clefSelect">Bass</button>'+
+                                    '<button id="alto-button" type="button" class="btn btn-warning clefSelect">Alto</button>'+
+                                    '<button id="tenor-button" type="button" class="btn btn-danger clefSelect">Tenor</button>'+
+                                '</div>'+
+                            '</div>'+
+                            '<div class="row span4">&nbsp;</div>'+
+                            '<div class="row span4 hide" id="treble">'+
+                                '<label>Treble Range</label>'+
+                                '<select id="treble-low" class="span2">'+
+                                    '<option>Lower</option>'+
+                                '</select>'+
+                                    '-'+
+                                '<select id="treble-high" class="span2">'+
+                                    '<option>Upper</option>'+
+                                '</select>'+
+                            '</div>'+
+                            '<div id="bass" class="row span4 hide">'+
+                                '<label>Bass Range</label>'+
+                                '<select id="bass-low" class="span2">'+
+                                    '<option>Lower</option>'+
+                                '</select>'+
+                                    '-'+
+                                '<select id="bass-high" class="span2">'+
+                                    '<option>Upper</option>'+
+                                '</select>'+
+                            '</div>'+
+                            '<div id="tenor" class="row span4 hide">'+
+                                '<label>Tenor Range</label>'+
+                                '<select id="tenor-low" class="span2">'+
+                                    '<option>Lower</option>'+
+                                '</select>'+
+                                    '-'+
+                                '<select id="tenor-high" class="span2">'+
+                                    '<option>Upper</option>'+
+                                '</select>'+
+                            '</div>'+
+                            '<div id="alto" class="row span4 hide">'+
+                                '<label>Alto Range</label>'+
+                                '<select id="alto-low" class="span2">'+
+                                    '<option>Lower</option>'+
+                                '</select>'+
+                                    '-'+
+                                '<select id="alto-high" class="span2">'+
+                                    '<option>Upper</option>'+
+                                '</select>'+
+                            '</div>'+
+                        '</div>'+
+                        '<div class="span1"></div>'+
+                        '<div class="span7">'+
+                            '<h2 class="span4">Layout</h2>'+
+                            '<h4 class="span4" id="quiz-count">0/60</h4>'+
+                            '<div id="layout" class="row span7"></div>'+
+                            '<div class="row span7">'+
+                                '<div style="float: left;">Flats</div>'+
+                                '<div style="float: right; padding-right: 48px;">Sharps</div>'+
+                                '<div class="btn-toolbar">'+
+                                    '<div class="btn-group controls-row" data-toggle="buttons-checkbox">'+
+                                        '<button id="flat-7" type="button" class="btn btn key-signature" title="Cb Major / Ab minor">7</button>'+
+                                        '<button id="flat-6" type="button" class="btn btn key-signature" title="Gb Major / Eb minor">6</button>'+
+                                        '<button id="flat-5" type="button" class="btn btn key-signature" title="Db Major / Bb minor">5</button>'+
+                                        '<button id="flat-4" type="button" class="btn btn key-signature" title="Ab Major / F minor">4</button>'+
+                                        '<button id="flat-3" type="button" class="btn btn key-signature" title="Eb Major / F minor">3</button>'+
+                                        '<button id="flat-2" type="button" class="btn btn key-signature" title="Bb Major / G minor">2</button>'+
+                                        '<button id="flat-1" type="button" class="btn btn key-signature" title="F Major / D minor">1</button>'+
+                                        '<button id="none" type="button" class="active btn btn-primary key-signature" title="C Major / A minor">0</button>'+
+                                        '<button id="sharp-1" type="button" class="btn btn-inverse key-signature" title="G Major / E minor">1</button>'+
+                                        '<button id="sharp-2" type="button" class="btn btn-inverse key-signature" title="D Major / B minor">2</button>'+
+                                        '<button id="sharp-3" type="button" class="btn btn-inverse key-signature" title="A Major / F# minor">3</button>'+
+                                        '<button id="sharp-4" type="button" class="btn btn-inverse key-signature" title="E Major / C# minor">4</button>'+
+                                        '<button id="sharp-5" type="button" class="btn btn-inverse key-signature" title="B Major / G# minor">5</button>'+
+                                        '<button id="sharp-6" type="button" class="btn btn-inverse key-signature" title="F# Major / D# minor">6</button>'+
+                                        '<button id="sharp-7" type="button" class="btn btn-inverse key-signature" title="C# Major / A# minor">7</button>'+
+                                    '</div>'+
+                                '</div>'+
+                            '</div>'+
+                        '</div>'+
+                    '<div class="row">'+
+                        '<div class="span12">'+
+                            '<button id="create" class="btn btn-primary large">Create Worksheet</button>'+
+                        '</div>'+
+                    '</div>'+
+                '</div>'+
+            '</div>'+
+            '<div id="error" class="modal hide fade">'+
+              '<div class="modal-header">'+
+                '<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>'+
+                '<h3>Slow your roll...</h3>'+
+              '</div>'+
+              '<div class="modal-body">'+
+                '<p></p>'+
+              '</div>'+
+              '<div class="modal-footer"></div>'+
+            '</div>');
+    }, 
+    breakdown: function() {
+     $(".modal-backdrop").hide();
+    }
+});
+
+test("MadMinute.render()", function() {
+  MadMinute.init();
+  equal($("#layout .layout-square").length, 60, "60 Layout squares rendered")
+});
+
+test("MadMinute.showError()", function() {
+  MadMinute.init();
+  equal($("#error").is(":visible"), false, "Error modal is not visible on page load.")
+  equal($(".modal-backdrop").length, 0, "Modial dialog backdrop not visible on page load.")
+
+  MadMinute.showError("This is a test of the modal dialog.")
+  equal($("#error .modal-body").text(),"This is a test of the modal dialog.","Modal dialog populated with passed string programatically.")
+  equal($(".modal-backdrop").length, 1, "Modal dialog activated programatically backdrop shows.")
+});
+

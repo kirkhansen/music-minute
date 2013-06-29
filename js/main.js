@@ -151,8 +151,8 @@ var MadMinute = {
 		this.pickedKeys = [];
 		this.trebleRange = new MadMinuteUtlities.Range(['E3','F3','G3','A3','B3','C4','D4','E4','F4','G4','A4','B4','C5','D5','E5','F5','G5','A5','B5','C6','D6','E6']);
 		this.bassRange = new MadMinuteUtlities.Range(['E1','F1','G1','A1','B1','C2', 'D2', 'E2', 'F2', 'G2', 'A2', 'B2', 'C3', 'D3', 'E3','F3','G3','A3','B3','C4','D4','E4','F4','G4','A4','B4','C5']);
-		this.tenorRange = new MadMinuteUtlities.Range(['C3', 'D3', 'E3', 'F3', 'G3', 'A3', 'B3', 'C4', 'D4', 'E4','F4','G4','A4','B3','C4','D4','E4','F4','G4','A4','B4','C5']);
-		this.altoRange = new MadMinuteUtlities.Range(['C3', 'D3', 'E3', 'F3', 'G3', 'A3', 'B3', 'C4', 'D4', 'E4','F4','G4','A4','B4','C5','D5','E5','F5','G5','A5','B5','C6']);
+		this.tenorRange = new MadMinuteUtlities.Range(['C3','D3','E3','F3','G3','A3','B3','C4','D4','E4','F4','G4','A4','B4','C5','D5','E5','F5','G5','A5','B5','C6']);
+		this.altoRange = new MadMinuteUtlities.Range(['C3','D3','E3','F3','G3','A3','B3','C4','D4','E4','F4','G4','A4','B4','C5','D5','E5','F5','G5','A5','B5','C6']);
 		this.bugCount = 0;
 	},
 	bindEvents: function() {
@@ -210,7 +210,7 @@ var MadMinute = {
 			MadMinuteUtlities.populateClef('alto', $(this).val(), 'high');
 		});
 		this.$layout.on('click', this.$square, function(e) {
-			var thisClasses = $(e.target).attr('class').split(" ");
+ 			var thisClasses = $(e.target).attr('class').split(" ");
 			var thisClass = thisClasses[1];
 			//returns the buttons that are pressed
 			var activeButtons = MadMinuteUtlities.findActiveRanges(e);
@@ -259,7 +259,7 @@ var MadMinute = {
 	},
 	showError: function(str) {
 		$('#error .modal-body').html(str);
-		$('#error').modal('show')
+		$('#error').modal('show');
 	},
 	render: function() {
 		for (var i = 0; i < 10; i++) {
