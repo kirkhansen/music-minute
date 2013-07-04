@@ -186,7 +186,7 @@ var MadMinute = {
 				case 'tenor-button':
 				clef = 'tenor';
 				shade = 'tenorShade';
-				correspondingSelector = MadMinute$tenorRange;
+				correspondingSelector = MadMinute.$tenorRange;
 				break;
 			}
 			correspondingSelector.toggle();

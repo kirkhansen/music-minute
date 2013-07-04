@@ -646,11 +646,196 @@ module("Note Layout", {
     }
 });
 
-test("MadMinute.render()", function() {
+test("Render layout squares", function() {
   MadMinute.init();
   equal($("#layout .layout-square").length, 60, "60 Layout squares rendered")
+  $("#layout .layout-square").each(function(index) {
+    equal($(this).hasClass('off'), true, "Layout square " + index + " has class of 'off' on page load.")
+  });
 });
+//TREBLE//
+test("Turn all layout squares to trebble", function() {
+  MadMinute.init();
+  //Check treble button functionality
+  $("#treble-button").click();
+  //Turn the first square on
 
+  $("#layout .layout-square").each(function(index) {
+    $(".layout-square").eq(index).click();
+  });
+  $("#layout .layout-square").each(function(index) {
+    equal($(this).hasClass('trebleShade'), true, "Layout square " + index + " has class of trebleShade after treble button is activated and layout square is clicked.")
+  });
+});
+test("Turn all layout squares to trebble and then off", function() {
+  MadMinute.init();
+  $("#treble-button").click();
+  $("#layout .layout-square").each(function(index) {
+    $(".layout-square").eq(index).click();
+  });
+  $("#layout .layout-square").each(function(index) {
+    equal($(this).hasClass('trebleShade'), true, "Layout square " + index + " has class of trebleShade after treble button is activated and layout square is clicked.")
+  });
+  $("#layout .layout-square").each(function(index) {
+    $(".layout-square").eq(index).click();
+  });
+  $("#layout .layout-square").each(function(index) {
+    equal($(this).hasClass('off'), true, "Layout square " + index + " has class of off after treble button it has been activated and square is clicked again.")
+  });
+});
+test("Turn all layout squares to treble and then every other off", function() {
+  MadMinute.init();
+  $("#treble-button").click();
+  $("#layout .layout-square").each(function(index) {
+    $(".layout-square").eq(index).click();
+  });
+  $("#layout .layout-square").each(function(index) {
+    if (index % 2 === 0) {
+      $(".layout-square").eq(index).click();
+      equal($(this).hasClass('trebleShade'), false, "Layout square " + index + " has class of off after treble button is activated and layout square is clicked and then clicked again.")
+    }
+    else {
+      equal($(this).hasClass('trebleShade'), true, "Layout square " + index + " has class of trebleShade after treble button is activated and layout square is clicked and surrounding squares are clicked.")
+    }
+  });
+});
+//BASS//
+test("Turn all layout squares to bass", function() {
+  MadMinute.init();
+  //Check treble button functionality
+  $("#bass-button").click();
+  //Turn the first square on
+
+  $("#layout .layout-square").each(function(index) {
+    $(".layout-square").eq(index).click();
+  });
+  $("#layout .layout-square").each(function(index) {
+    equal($(this).hasClass('bassShade'), true, "Layout square " + index + " has class of bassShade after bass button is activated and layout square is clicked.")
+  });
+});
+test("Turn all layout squares to bass and then off", function() {
+  MadMinute.init();
+  $("#bass-button").click();
+  $("#layout .layout-square").each(function(index) {
+    $(".layout-square").eq(index).click();
+  });
+  $("#layout .layout-square").each(function(index) {
+    equal($(this).hasClass('bassShade'), true, "Layout square " + index + " has class of bassShade after bass button is activated and layout square is clicked.")
+  });
+  $("#layout .layout-square").each(function(index) {
+    $(".layout-square").eq(index).click();
+  });
+  $("#layout .layout-square").each(function(index) {
+    equal($(this).hasClass('off'), true, "Layout square " + index + " has class of off after bass button it has been activated and square is clicked again.")
+  });
+});
+test("Turn all layout squares to bass and then every other off", function() {
+  MadMinute.init();
+  $("#bass-button").click();
+  $("#layout .layout-square").each(function(index) {
+    $(".layout-square").eq(index).click();
+  });
+  $("#layout .layout-square").each(function(index) {
+    if (index % 2 === 0) {
+      $(".layout-square").eq(index).click();
+      equal($(this).hasClass('bassShade'), false, "Layout square " + index + " has class of off after bass button is activated and layout square is clicked and then clicked again.")
+    }
+    else {
+      equal($(this).hasClass('bassShade'), true, "Layout square " + index + " has class of bassShade after treble button is activated and layout square is clicked and surrounding squares are clicked.")
+    }
+  });
+});
+//ALTO//
+test("Turn all layout squares to alto", function() {
+  MadMinute.init();
+  //Check treble button functionality
+  $("#alto-button").click();
+  //Turn the first square on
+
+  $("#layout .layout-square").each(function(index) {
+    $(".layout-square").eq(index).click();
+  });
+  $("#layout .layout-square").each(function(index) {
+    equal($(this).hasClass('altoShade'), true, "Layout square " + index + " has class of altoShade after alto button is activated and layout square is clicked.")
+  });
+});
+test("Turn all layout squares to alto and then off", function() {
+  MadMinute.init();
+  $("#alto-button").click();
+  $("#layout .layout-square").each(function(index) {
+    $(".layout-square").eq(index).click();
+  });
+  $("#layout .layout-square").each(function(index) {
+    equal($(this).hasClass('altoShade'), true, "Layout square " + index + " has class of altoShade after alto button is activated and layout square is clicked.")
+  });
+  $("#layout .layout-square").each(function(index) {
+    $(".layout-square").eq(index).click();
+  });
+  $("#layout .layout-square").each(function(index) {
+    equal($(this).hasClass('off'), true, "Layout square " + index + " has class of off after alto button it has been activated and square is clicked again.")
+  });
+});
+test("Turn all layout squares to alto and then every other off", function() {
+  MadMinute.init();
+  $("#alto-button").click();
+  $("#layout .layout-square").each(function(index) {
+    $(".layout-square").eq(index).click();
+  });
+  $("#layout .layout-square").each(function(index) {
+    if (index % 2 === 0) {
+      $(".layout-square").eq(index).click();
+      equal($(this).hasClass('altoShade'), false, "Layout square " + index + " has class of off after alto button is activated and layout square is clicked and then clicked again.")
+    }
+    else {
+      equal($(this).hasClass('altoShade'), true, "Layout square " + index + " has class of altoShade after treble button is activated and layout square is clicked and surrounding squares are clicked.")
+    }
+  });
+});
+//TENOR//
+test("Turn all layout squares to tenor", function() {
+  MadMinute.init();
+  //Check treble button functionality
+  $("#tenor-button").click();
+  //Turn the first square on
+  $("#layout .layout-square").each(function(index) {
+    $(".layout-square").eq(index).click();
+  });
+  $("#layout .layout-square").each(function(index) {
+    equal($(this).hasClass('tenorShade'), true, "Layout square " + index + " has class of tenorShade after tenor button is activated and layout square is clicked.")
+  });
+});
+test("Turn all layout squares to tenor and then off", function() {
+  MadMinute.init();
+  $("#alto-button").click();
+  $("#layout .layout-square").each(function(index) {
+    $(".layout-square").eq(index).click();
+  });
+  $("#layout .layout-square").each(function(index) {
+    equal($(this).hasClass('altoShade'), true, "Layout square " + index + " has class of altoShade after alto button is activated and layout square is clicked.")
+  });
+  $("#layout .layout-square").each(function(index) {
+    $(".layout-square").eq(index).click();
+  });
+  $("#layout .layout-square").each(function(index) {
+    equal($(this).hasClass('off'), true, "Layout square " + index + " has class of off after alto button it has been activated and square is clicked again.")
+  });
+});
+test("Turn all layout squares to tenor and then every other off", function() {
+  MadMinute.init();
+  $("#alto-button").click();
+  $("#layout .layout-square").each(function(index) {
+    $(".layout-square").eq(index).click();
+  });
+  $("#layout .layout-square").each(function(index) {
+    if (index % 2 === 0) {
+      $(".layout-square").eq(index).click();
+      equal($(this).hasClass('altoShade'), false, "Layout square " + index + " has class of off after alto button is activated and layout square is clicked and then clicked again.")
+    }
+    else {
+      equal($(this).hasClass('altoShade'), true, "Layout square " + index + " has class of altoShade after treble button is activated and layout square is clicked and surrounding squares are clicked.")
+    }
+  });
+});
 test("MadMinute.showError()", function() {
   MadMinute.init();
   equal($("#error").is(":visible"), false, "Error modal is not visible on page load.")
