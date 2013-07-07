@@ -597,6 +597,12 @@ module("Note Layout", {
                         '<div class="span1"></div>'+
                         '<div class="span7">'+
                             '<h2 class="span4">Layout</h2>'+
+                            '<div class="btn-toolbar">' +
+                                  '<div class="btn-group controls-row" data-toggle="buttons-radio">'+
+                                     '<button id="selection-single" type="button" class="btn btn note-selection active" title="Single Note Selection">Single</button>'+
+                                     '<button id="selection-row" type="button" class="btn btn note-selection" title="Row Note Selection">Row</button>'+
+                                 '</div>'+
+                             '</div>'+
                             '<h4 class="span4" id="quiz-count">0/60</h4>'+
                             '<div id="layout" class="row span7"></div>'+
                             '<div class="row span7">'+

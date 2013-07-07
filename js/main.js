@@ -39,6 +39,25 @@ var MadMinuteUtlities = {
 		alActive = MadMinute.$tenor.hasClass('active') ? 1 : 0;
 		return activeArrayStatus = [trActive, baActive, teActive, alActive];
 	},
+	findPossibleShades: function(activeButtons) {
+		var squareClasses = ['off'];
+		$.each(activeButtons, function(index, value) {
+			if ((index == 0) && (value == 1)) {
+				squareClasses.push('trebleShade');
+			}
+			else if ((index == 1) && (value == 1)) {
+				squareClasses.push('bassShade');
+			}
+			else if ((index == 2) && (value == 1)) {
+				squareClasses.push('altoShade');
+			}
+			else if ((index == 3) && (value == 1)) {
+				squareClasses.push('tenorShade');
+			}
+		});
+		return squareClasses;
+	},
+
 	findModifiedRange: function(startingNote, range) {
 		var newRange;
 		if (startingNote == null) {
@@ -242,21 +261,8 @@ var MadMinute = {
 			var thisClasses = $(e.target).attr('class').split(" ");
 			var thisClass = thisClasses[1];
 			var activeButtons = MadMinuteUtlities.findActiveRanges(e);
-			var squareClasses = ['off'];
-			$.each(activeButtons, function(index, value) {
-				if ((index == 0) && (value == 1)) {
-					squareClasses.push('trebleShade');
-				}
-				else if ((index == 1) && (value == 1)) {
-					squareClasses.push('bassShade');
-				}
-				else if ((index == 2) && (value == 1)) {
-					squareClasses.push('altoShade');
-				}
-				else if ((index == 3) && (value == 1)) {
-					squareClasses.push('tenorShade');
-				}
-			});
+			var squareClasses = MadMinuteUtlities.findPossibleShades(activeButtons);
+
 			var indexOfClass = squareClasses.indexOf(thisClass);
 			if ($('#selection-single').hasClass('active')) {
 				//returns the buttons that are pressed
@@ -293,7 +299,6 @@ var MadMinute = {
 					}
 					MadMinute.updateCount();
 				}
-				console.log(thisClass);
 			} 			
 		});
 		this.$create.on('click', function() {
