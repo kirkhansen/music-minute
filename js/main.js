@@ -209,12 +209,39 @@ var MadMinute = {
 		this.$alto1.change(function() {
 			MadMinuteUtlities.populateClef('alto', $(this).val(), 'high');
 		});
-		this.$layout.on('click', this.$square, function(e) {
- 			var thisClasses = $(e.target).attr('class').split(" ");
+		this.$layout.on('mouseover', this.$square, function(e) {
+			//selection-single, selection-row
+			if ($('#selection-single').hasClass('active')) {
+				$(".layout-square").removeClass("hovered");
+				var thisClasses = $(e.target).attr('class').split(" ");
+				var thisClass = thisClasses[1];
+				if (thisClass != 'span7') {
+					var row = $(e.target).data('row');
+					var column = $(e.target).data('column')
+					$("[data-row = '" + row + "'][data-column = '"+ column +"']").addClass("hovered");
+				}
+			}
+			else {
+				$(".layout-square").removeClass("hovered");
+				var thisClasses = $(e.target).attr('class').split(" ");
+				var thisClass = thisClasses[1];
+				if (thisClass != 'span7') {
+					var row = $(e.target).data('row');
+					var column = $(e.target).data('column')
+					$("[data-row = '" + row + "']").addClass("hovered");
+				}
+			}
+		});
+		this.$layout.on('mouseleave', this.$square, function(e) {
+			var thisClasses = $(e.target).attr('class').split(" ");
 			var thisClass = thisClasses[1];
-			//returns the buttons that are pressed
+				$(".layout-square").removeClass("hovered");
+		});
+		this.$layout.on('click', this.$square, function(e) {
+			$(".layout-square").removeClass("hovered");
+			var thisClasses = $(e.target).attr('class').split(" ");
+			var thisClass = thisClasses[1];
 			var activeButtons = MadMinuteUtlities.findActiveRanges(e);
-			//creates an array of possible classes for each square
 			var squareClasses = ['off'];
 			$.each(activeButtons, function(index, value) {
 				if ((index == 0) && (value == 1)) {
@@ -231,21 +258,43 @@ var MadMinute = {
 				}
 			});
 			var indexOfClass = squareClasses.indexOf(thisClass);
-			if (thisClass != 'span7') {		
-				if (squareClasses.length > 1) {
-					if (indexOfClass + 1 == squareClasses.length) {
-						$(e.target).removeClass(thisClass).addClass(squareClasses[0]);
+			if ($('#selection-single').hasClass('active')) {
+				//returns the buttons that are pressed
+				//creates an array of possible classes for each square
+				if (thisClass != 'span7') {		
+					if (squareClasses.length > 1) {
+						if (indexOfClass + 1 == squareClasses.length) {
+							$(e.target).removeClass(thisClass).addClass(squareClasses[0]);
+						}
+						else {
+							$(e.target).removeClass(thisClass).addClass(squareClasses[indexOfClass + 1]);
+						}
 					}
-
-					else {
-						$(e.target).removeClass(thisClass).addClass(squareClasses[indexOfClass + 1]);
+					else{
+						MadMinute.showError('<p>You need to select a clef before you change your layout!</p>')
 					}
+					MadMinute.updateCount();
 				}
-				else{
-					MadMinute.showError('<p>You need to select a clef before you change your layout!</p>')
-				}
-				MadMinute.updateCount();
 			}
+			//if the selection is set to row
+			else {
+				var row = $(e.target).data('row');
+				if (thisClass != 'span7') {
+					if (squareClasses.length > 1) {
+						if (indexOfClass + 1 == squareClasses.length) {
+							$("[data-row = '" + row + "']").removeClass(thisClass).addClass(squareClasses[0]);
+						}
+						else {
+							$("[data-row = '" + row + "']").removeClass(thisClass).addClass(squareClasses[indexOfClass + 1]);
+						}
+					}
+					else{
+						MadMinute.showError('<p>You need to select a clef before you change your layout!</p>')
+					}
+					MadMinute.updateCount();
+				}
+				console.log(thisClass);
+			} 			
 		});
 		this.$create.on('click', function() {
 			var count = MadMinuteUtlities.getCount();
