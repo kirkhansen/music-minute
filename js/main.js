@@ -231,33 +231,33 @@ var MadMinute = {
 		this.$layout.on('mouseover', this.$square, function(e) {
 			//selection-single, selection-row
 			if ($('#selection-single').hasClass('active')) {
-				$(".layout-square").removeClass("hovered");
+				$(".layout-square").removeClass("animated pulse");
 				var thisClasses = $(e.target).attr('class').split(" ");
 				var thisClass = thisClasses[1];
 				if (thisClass != 'span7') {
 					var row = $(e.target).data('row');
 					var column = $(e.target).data('column')
-					$("[data-row = '" + row + "'][data-column = '"+ column +"']").addClass("hovered");
+					$("[data-row = '" + row + "'][data-column = '"+ column +"']").addClass("animated pulse");
 				}
 			}
 			else {
-				$(".layout-square").removeClass("hovered");
+				$(".layout-square").removeClass("animated pulse");
 				var thisClasses = $(e.target).attr('class').split(" ");
 				var thisClass = thisClasses[1];
 				if (thisClass != 'span7') {
 					var row = $(e.target).data('row');
 					var column = $(e.target).data('column')
-					$("[data-row = '" + row + "']").addClass("hovered");
+					$("[data-row = '" + row + "']").addClass("animated pulse");
 				}
 			}
 		});
 		this.$layout.on('mouseleave', this.$square, function(e) {
 			var thisClasses = $(e.target).attr('class').split(" ");
 			var thisClass = thisClasses[1];
-				$(".layout-square").removeClass("hovered");
+				$(".layout-square").removeClass("animated pulse");
 		});
 		this.$layout.on('click', this.$square, function(e) {
-			$(".layout-square").removeClass("hovered");
+			$(".layout-square").removeClass("animated pulse");
 			var thisClasses = $(e.target).attr('class').split(" ");
 			var thisClass = thisClasses[1];
 			var activeButtons = MadMinuteUtlities.findActiveRanges(e);
