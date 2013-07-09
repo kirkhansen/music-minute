@@ -62,6 +62,17 @@ h2, h4 {
 color: #444;
 text-shadow: 0px 2px 3px #fff;
 }
+#treble, #bass, #alto, #tenor {
+    background: #cecece;
+    border-radius: 7px;
+    padding: 5px;
+    margin-bottom: 5px;
+}
+
+#treble label, #bass label, #alto label, #tenor label {
+    font-weight: 700;
+}
+
 .animated{-webkit-animation-fill-mode:both;-moz-animation-fill-mode:both;-ms-animation-fill-mode:both;-o-animation-fill-mode:both;animation-fill-mode:both;-webkit-animation-duration:1s;-moz-animation-duration:1s;-ms-animation-duration:1s;-o-animation-duration:1s;animation-duration:1s;}.animated.hinge{-webkit-animation-duration:2s;-moz-animation-duration:2s;-ms-animation-duration:2s;-o-animation-duration:2s;animation-duration:2s;}@-webkit-keyframes pulse {
     0% { -webkit-transform: scale(1); }	50% { -webkit-transform: scale(1.5); }
     100% { -webkit-transform: scale(1); }
