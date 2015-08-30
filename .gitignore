@@ -1,2 +1,4 @@
 # Can ignore specific files
 .DS_Store
+
+js/vexflow/vexflow-min-old.js
