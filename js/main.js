@@ -72,7 +72,7 @@ var MadMinuteUtlities = {
 				}
 			}
 		}
-	}, 
+	},
 	getCount: function() {
 		var length = $("#layout .layout-square").size();
 		var unchecked = 0;
@@ -124,7 +124,7 @@ var MadMinuteUtlities = {
 			if ($(".key-signature").eq(i).hasClass("active")) {
 				keys.push(MadMinute.allKeys[i])
 			}
-		} 
+		}
 		return keys;
 	}
 };
@@ -299,7 +299,7 @@ var MadMinute = {
 					}
 					MadMinute.updateCount();
 				}
-			} 			
+			}
 		});
 		this.$create.on('click', function() {
 			var count = MadMinuteUtlities.getCount();
@@ -428,7 +428,7 @@ var MadMinute = {
 			    	resolution: Vex.Flow.RESOLUTION
 			  	});
 			  	voice.addTickables(notes);
-			  	var formatter = new Vex.Flow.Formatter().joinVoices([voice]).format([voice], 300);
+			  	var formatter = new Vex.Flow.Formatter().joinVoices([voice]).format([voice], 560);
 				voice.draw(ctx, stave);
 			}
 		}
