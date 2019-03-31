@@ -371,7 +371,9 @@ var MadMinute = {
 		};
 		$("#notes").prepend("<div>Date:_<span style='text-decoration: underline'>" + moment().startOf('day').format("MM/DD/YYYY") + "</span>_</div>")
 		$("#notes").prepend("<div>Name:_____________</div>");
-		$("#notes").prepend("<div>Title: " + $("#sheet-title").val() + "</div>")
+		if ($("#sheet-title").val()) {
+			$("#notes").prepend("<div>Title: " + $("#sheet-title").val() + "</div>")
+		}	
 
 		//$("#form").hide();
 		//$(".navbar").hide();
