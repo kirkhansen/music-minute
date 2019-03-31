@@ -1,10 +1,10 @@
 Mad-Minute-Music
 ================
 
-###About###
+## About
 Mad Minute Music is a tool to quickly generate note naming worksheets for music students.  It can be used at the official Mad Minute Music page: http://www.secondrunnerup.com/mmm2
 
-###Features###
+## Features
 * Pick from one to four clefs including all of your personal favorites: **treble**, **bass**, **alto**, and even the dreaded **tenor**.
 * Up to **60 questions per** worksheet.
 * Chose if you want a question slot to have no note, or a particular clef.
@@ -12,7 +12,7 @@ Mad Minute Music is a tool to quickly generate note naming worksheets for music 
 * Worksheet didn't turn out the way you wanted?  Easily go back and edit it and try again!
 * Easily print just what you need, no extraneous images or site interface will print on a worksheet.
 
-###Technical Stuff###
+## Technical Stuff
 The following libraries are used in this project:
 * [jQuery](http://jquery.com)
 * [Twitter Bootstrap](http://twitter.github.io/bootstrap/)
@@ -20,7 +20,7 @@ The following libraries are used in this project:
 * [Vexflow](http://vexflow.com/)
 * [Font Awesome](http://fortawesome.github.io/Font-Awesome/)
 
-###Annoying Legal Stuff###
+## Annoying Legal Stuff
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
