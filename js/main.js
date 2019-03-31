@@ -162,6 +162,7 @@ var MadMinute = {
 		this.$del = $("#delete-worksheet");
 		this.$bugs = $("#bugs");
 		this.$clefSelect = $(".clefSelect");
+		this.$sheetTitle = $(".sheet-title");
 		//all the available keys
 		this.allKeys = ['Cb', 'Gb', 'Db', 'Ab', 'Eb', 'Bb', 'F', 'C', 'G', 'D', 'A', 'E', 'B', 'F#', 'C#']
 		//all key selections in booleans map to this.allKeys
@@ -370,6 +371,7 @@ var MadMinute = {
 		};
 		$("#notes").prepend("<div>Date:_<span style='text-decoration: underline'>" + moment().startOf('day').format("MM/DD/YYYY") + "</span>_</div>")
 		$("#notes").prepend("<div>Name:_____________</div>");
+		$("#notes").prepend("<div>Title: " + $("#sheet-title").val() + "</div>")
 
 		//$("#form").hide();
 		//$(".navbar").hide();
