@@ -74,7 +74,7 @@ var MadMinuteUtlities = {
 		}
 	},
 	getCount: function() {
-		var length = $("#layout .layout-square").size();
+		var length = $("#layout .layout-square").length;
 		var unchecked = 0;
 		for (var i = 0; i < length; i++) {
 			if ($("#layout .layout-square").eq(i).hasClass('off')) {
