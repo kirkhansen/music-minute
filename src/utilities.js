@@ -38,13 +38,58 @@ function getNoteValuesFromTimeSignature(timeSignature) {
 }
 
 function getAllowedNotesFromTimeSignature(timeSignature) {
-
+    const noteValues = getNoteValuesFromTimeSignature(timeSignature);
+    const bpm = getBeatsPerMeasure(timeSignature);
+    return noteValues.filter(item => item.normalizedDuration <= bpm);
 }
+
+function getRandomTimeSignature() {
+    return TimeSignatures[Math.floor(Math.random() * Math.floor(TimeSignatures.length))];
+}
+
+function getXRandomTimeSignatures(count) {
+    const timeSignatureArray = [];
+    for (let i = 0; i < count; i += 1) {
+        timeSignatureArray.push(TimeSignatures[Math.floor(Math.random() * Math.floor(TimeSignatures.length))]);
+    }
+    return timeSignatureArray;
+}
+
+function getRandomNoteFromAllowedNotes(noteChoices) {
+    return noteChoices[Math.floor(Math.random() * Math.floor(noteChoices.length))];
+}
+
+function getRandomFromAllowedNotes(noteChoices) {
+    return getRandomNoteFromAllowedNotes(noteChoices);
+}
+
+function finishMeasure(beatsLeft, noteValues) {
+    console.log("hit");
+    const arrayOfIndexes = [];
+    let beatsLeftInMeasure = beatsLeft;
+    let i = 0;
+    while (beatsLeftInMeasure > 0) {
+        if (noteValues[i].normalizedDuration <= beatsLeftInMeasure) {
+            beatsLeftInMeasure = beatsLeftInMeasure - noteValues[i].normalizedDuration;
+            arrayOfIndexes.push(i);
+            i = i;
+        }
+        else {
+            i = i+1;
+        }
+    }
+    return arrayOfIndexes;
+}
+
 export {
     getBeatsPerMeasure, 
     getNoteValuesFromTimeSignature, 
     getNoteTypeForBeat, 
-    getAllowedNotesFromTimeSignature
+    getAllowedNotesFromTimeSignature,
+    getRandomTimeSignature,
+    getRandomFromAllowedNotes,
+    finishMeasure,
+    getXRandomTimeSignatures,
 };
 
 // whole: {

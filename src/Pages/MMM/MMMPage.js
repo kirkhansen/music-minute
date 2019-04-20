@@ -4,7 +4,7 @@ const MMMPage = props => {
   return (
    
       <div>
-        <h1>Hello, MMM.</h1>
+        <h1>{props.timeSig}</h1>
       </div>
 
   );

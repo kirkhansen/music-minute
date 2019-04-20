@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import DefaultTemplate from '../Templates/DefaultTemplate';
 import About from './About.js';
 import './AboutContainer.scss';
