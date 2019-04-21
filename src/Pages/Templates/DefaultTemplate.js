@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, Link } from 'react-router-dom';
 import moment from 'moment';
 
 import { RoutePath } from '../../constants';
@@ -7,18 +7,14 @@ import './DefaultTemplate.scss';
 
 
 class DefaultTemplate extends React.PureComponent {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     const { children } = this.props;
     return (
       <Fragment>
         <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
-          <a className="navbar-brand" href="#">
+          <Link className="navbar-brand" to={RoutePath.HOME}>
             <i className="fas fa-music"></i> Mad Minute Music 2<sup><small>.5</small></sup>
-          </a>
+          </Link>
           <button
             className="navbar-toggler"
             type="button"

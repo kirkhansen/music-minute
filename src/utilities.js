@@ -64,21 +64,30 @@ function getRandomFromAllowedNotes(noteChoices) {
 }
 
 function finishMeasure(beatsLeft, noteValues) {
-    console.log("hit");
     const arrayOfIndexes = [];
     let beatsLeftInMeasure = beatsLeft;
     let i = 0;
     while (beatsLeftInMeasure > 0) {
         if (noteValues[i].normalizedDuration <= beatsLeftInMeasure) {
             beatsLeftInMeasure = beatsLeftInMeasure - noteValues[i].normalizedDuration;
-            arrayOfIndexes.push(i);
-            i = i;
+            arrayOfIndexes.push(i);;
         }
         else {
             i = i+1;
         }
     }
     return arrayOfIndexes;
+}
+
+function getNoteSuffix(type) {
+    if (type === 0) return ''
+    else if (type===1) return 'r';
+    const rand = Math.random() < 0.5
+    if (rand) {
+        return '';
+    }
+
+    return 'r';
 }
 
 export {
@@ -90,6 +99,7 @@ export {
     getRandomFromAllowedNotes,
     finishMeasure,
     getXRandomTimeSignatures,
+    getNoteSuffix,
 };
 
 // whole: {

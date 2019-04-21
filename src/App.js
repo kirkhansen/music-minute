@@ -4,10 +4,6 @@ import history from './history';
 import AppRoutes from './App.routes';
 
 class App extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     return (
       <Router history={history}>
