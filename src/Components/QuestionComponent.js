@@ -6,6 +6,7 @@ import {
   getNoteTypeForBeat,
   getAllowedNotesFromTimeSignature,
   getRandomTimeSignature,
+  getAllowedNotesFromTimeSignatureAndActiveNotes,
   getRandomFromAllowedNotes,
   finishMeasure,
   getNoteSuffix,
@@ -17,10 +18,13 @@ class QuestionComponent extends Component {
     this.timeSig = getRandomTimeSignature();
   }
   componentDidUpdate() {
-    const { noteTypes } = this.props;
+    const { noteTypes, allowedNotes } = this.props;
+    console.log(`Allowed Notes By User ${allowedNotes}`);
+
     const noteSuffix = getNoteSuffix(noteTypes);
-    const allowedNotes = getAllowedNotesFromTimeSignature(this.timeSig);
-    const pickedNote = getRandomFromAllowedNotes(allowedNotes);
+    const OutLowedNotes = getAllowedNotesFromTimeSignatureAndActiveNotes(this.timeSig, allowedNotes);
+    console.log(OutLowedNotes);
+    const pickedNote = getRandomFromAllowedNotes(OutLowedNotes);
     const container = document.getElementById('test');
     var renderer = new Vex.Flow.Renderer(container, Vex.Flow.Renderer.Backends.SVG);
     renderer.resize(150, 150);
@@ -45,7 +49,7 @@ class QuestionComponent extends Component {
       note.push(new Vex.Flow.StaveNote({ clef: 'treble', keys: ['b/4'], duration: `${pickedNote.vfNotation}${noteSuffix}` }));
 
       const remainingBeats = getBeatsPerMeasure(this.timeSig) - pickedNote.normalizedDuration;
-      const match = allowedNotes.find(item => item.normalizedDuration === remainingBeats);
+      const match = OutLowedNotes.find(item => item.normalizedDuration === remainingBeats);
 
       if (match) note.push(new Vex.Flow.GhostNote({ clef: 'treble', keys: ['b/4'], duration: match.vfNotation }));
       else {
@@ -68,11 +72,15 @@ class QuestionComponent extends Component {
     voice.draw(ctx, stave);
   }
   componentDidMount() {
-    // const timeSig = getRandomTimeSignature();
-    const { noteTypes } = this.props;
+    console.log(`The time signature: ${this.timeSig}`);
+    const { noteTypes, allowedNotes } = this.props;
+    console.log(`All Possible Notes: ${JSON.stringify(allowedNotes)}`);
+    console.log(`Allowed Notes By Time Signature: ${JSON.stringify(getAllowedNotesFromTimeSignature(this.timeSig))}`);
+    console.log(`Allowed Notes By User: ${JSON.stringify(getAllowedNotesFromTimeSignatureAndActiveNotes(this.timeSig, allowedNotes))}`)
     const noteSuffix = getNoteSuffix(noteTypes);
-    const allowedNotes = getAllowedNotesFromTimeSignature(this.timeSig);
-    const pickedNote = getRandomFromAllowedNotes(allowedNotes);
+    const OutLowedNotes = getAllowedNotesFromTimeSignatureAndActiveNotes(this.timeSig, allowedNotes);
+    const pickedNote = getRandomFromAllowedNotes(OutLowedNotes);
+    console.log(`Picked Note: ${JSON.stringify(getRandomFromAllowedNotes(OutLowedNotes))}`);
     const container = document.getElementById('test');
     var renderer = new Vex.Flow.Renderer(container, Vex.Flow.Renderer.Backends.SVG);
     renderer.resize(150, 150);
@@ -97,14 +105,16 @@ class QuestionComponent extends Component {
       note.push(new Vex.Flow.StaveNote({ clef: 'treble', keys: ['b/4'], duration: `${pickedNote.vfNotation}${noteSuffix}` }));
 
       const remainingBeats = getBeatsPerMeasure(this.timeSig) - pickedNote.normalizedDuration;
-      const match = allowedNotes.find(item => item.normalizedDuration === remainingBeats);
+      console.log(`Remaining Beats: ${remainingBeats}`)
+      
+      const match = getAllowedNotesFromTimeSignature(this.timeSig).find(item => item.normalizedDuration === remainingBeats);
 
       if (match) note.push(new Vex.Flow.GhostNote({ clef: 'treble', keys: ['b/4'], duration: match.vfNotation }));
       else {
-        const remainingNotes = finishMeasure(remainingBeats, allowedNotes);
+        const remainingNotes = finishMeasure(remainingBeats, getAllowedNotesFromTimeSignature(this.timeSig));
         remainingNotes.forEach(index => {
           note.push(
-            new Vex.Flow.GhostNote({ clef: 'treble', keys: ['b/4'], duration:  allowedNotes[index].vfNotation })
+            new Vex.Flow.GhostNote({ clef: 'treble', keys: ['b/4'], duration:  getAllowedNotesFromTimeSignature(this.timeSig)[index].vfNotation })
           );
         });
       }

@@ -1,41 +1,83 @@
-import React, { Component } from 'react';
-import QuestionComponent from '../../Components/QuestionComponent';
+import React, { Component, Fragment } from 'react';
+import Select from 'react-select';
 
+import QuestionComponent from '../../Components/QuestionComponent';
+import { NoteValues, TimeSignatures, TimeSignatureOptions, NoteValueOptions } from '../../constants';
 import { getRandomTimeSignature, getXRandomTimeSignatures } from '../../utilities';
 import DefaultTemplate from '../Templates/DefaultTemplate';
 
 class MMMContainer extends Component {
   constructor(props) {
+    const questionCount = 10;
     super(props);
     this.state = {
-      questionTypes: 2,
-      questionCount: 5,
-      timeSigs: getXRandomTimeSignatures(5),
+      questionTypes: 0,
+      questionCount: questionCount,
+      renderWorksheet: false,
+      timeSigs: getXRandomTimeSignatures(questionCount),
+      allowedNotes: NoteValues,
+      allowedMeters: null,
     };
-    this.timeSig = getRandomTimeSignature();
-    // this.timeSigs = getXRandomTimeSignatures(this.state.questionCount);
+
+    this.handleChangeOfAllowedValues = this.handleChangeOfAllowedValues.bind(this);
     this.handleChangeQuestionTypes = this.handleChangeQuestionTypes.bind(this);
     this.handleChangeQuestionCount = this.handleChangeQuestionCount.bind(this);
+    this.handleMeterChange = this.handleMeterChange.bind(this);
+    this.handleToggleRender = this.handleToggleRender.bind(this);
   }
 
   componentWillUnmount() {
     this.timesSigs = [];
   }
-
+  handleToggleRender() {
+    const { renderWorksheet } = this.state;
+    this.setState({
+      renderWorksheet: !renderWorksheet,
+    });
+  }
   handleChangeQuestionTypes(e) {
     this.setState({
       questionTypes: +e.currentTarget.value,
-      timeSigs: getXRandomTimeSignatures(this.state.questionCount),
+      // timeSigs: getXRandomTimeSignatures(this.state.questionCount),
+    });
+  }
+
+  handleChangeOfAllowedValues(e) {
+    const { allowedNotes } = this.state;
+    const copy = allowedNotes;
+    const keys = Object.keys(copy);
+    for (let i = 0; i < keys.length; i += 1) {
+      copy[keys[i]].active = false;
+    }
+
+    for (let x = 0; x < e.length; x += 1) {
+      for (let i = 0; i < keys.length; i += 1) {
+        if (copy[keys[i]].vfNotation === e[x].value) {
+          copy[keys[i]].active = true;
+        }
+      }
+    }
+
+    this.setState({
+      allowedNotes: copy,
+    });
+  }
+
+  handleMeterChange(e) {
+    this.setState({
+      allowedMeters: e,
     });
   }
   handleChangeQuestionCount(e) {
-    console.log(e.currentTarget.value);
     this.setState({
       questionCount: +e.currentTarget.value,
     });
   }
   render() {
-    const { questionCount, questionTypes, timeSigs } = this.state;
+    const { questionCount, questionTypes, timeSigs, renderWorksheet, allowedNotes, allowedMeters } = this.state;
+    const allowedNotesKeys = Object.keys(allowedNotes);
+    const buttonText = renderWorksheet ? 'Clear Progress' : 'Render Worksheet';
+
     return (
       <DefaultTemplate>
         <form>
@@ -72,37 +114,17 @@ class MMMContainer extends Component {
                 <label htmlFor="notes">Notes &amp; Rests</label>
               </fieldset>
             </div>
-            <div className="col-3">
-              <fieldset>
-                <h3>Values</h3>
-                <input id="whole" type="checkbox" name="questionValues" value="w" />
-                <label htmlFor="notes">Whole Notes</label>
-                <br />
-                <input id="half" type="checkbox" name="questionValues" value="h" />
-                <label htmlFor="notes">Half Notes</label>
-                <br />
-                <input id="quarter" type="checkbox" name="questionValues" value="q" />
-                <label htmlFor="notes">Quarter Notes</label>
-                <br />
-                <input id="eighth" type="checkbox" name="questionValues" value="8" />
-                <label htmlFor="notes">Eighth Notes</label>
-                <br />
-                <input id="sixteenth" type="checkbox" name="questionValues" value="16" />
-                <label htmlFor="notes">Sixteenth Notes</label>
-                <br />
-                <input id="thirty-second" type="checkbox" name="questionValues" value="32" />
-                <label htmlFor="notes">Thirty-second Notes</label>
-              </fieldset>
-            </div>
+
             <div className="col-3">
               <fieldset>
                 <h4>Number of Questions</h4>
                 <input
+                  type="number"
                   id="number-of-questions"
-                  type="range"
+                  name="numberOfQuestions"
                   min="1"
                   max="60"
-                  onChange={this.handleChangeQuestionCount}
+                  onChange={this.handleChangeQustionCount}
                 />
                 <label htmlFor="number-of-questions">{questionCount}</label>
               </fieldset>
@@ -110,71 +132,68 @@ class MMMContainer extends Component {
           </div>
           <hr />
           <fieldset>
-            <h3>Time Signatures</h3>
             <div className="row">
               <div className="col-6">
-                <h4>Simple Meters</h4>
-                <input id="whole" type="checkbox" name="questionValues" value="w" />
-                <label htmlFor="notes">2/2</label>
-                <br />
-                <input id="whole" type="checkbox" name="questionValues" value="w" />
-                <label htmlFor="notes">2/4</label>
-                <br />
-                <input id="half" type="checkbox" name="questionValues" value="h" />
-                <label htmlFor="notes">3/4</label>
-                <br />
-                <input id="half" type="checkbox" name="questionValues" value="h" />
-                <label htmlFor="notes">4/4</label>
-                <br />
+                <fieldset>
+                  <h4>Time Signatures</h4>
+                  <Select
+                    id="time-signatures"
+                    onChange={this.handleMeterChange}
+                    isMulti
+                    isSearchable
+                    options={TimeSignatureOptions}
+                    placeholder="Select time signature(s)."
+                  />
+                  <label className="sr-only" htmlFor="time-signatures">
+                    Selection of time signatures
+                  </label>
+                </fieldset>
               </div>
+            </div>
+          </fieldset>
+          <fieldset>
+            <div className="row">
               <div className="col-6">
-                <h4>Compound Meters</h4>
-                <div className="row">
-                  <div className="col-6">
-                    <input id="quarter" type="checkbox" name="questionValues" value="q" />
-                    <label htmlFor="notes">3/2</label>
-                    <br />
-                    <input id="quarter" type="checkbox" name="questionValues" value="q" />
-                    <label htmlFor="notes">5/4</label>
-                    <br />
-                    <input id="quarter" type="checkbox" name="questionValues" value="q" />
-                    <label htmlFor="notes">3/8</label>
-                    <br />
-                    <input id="quarter" type="checkbox" name="questionValues" value="q" />
-                    <label htmlFor="notes">5/8</label>
-                  </div>
-                  <div className="col-6">
-                    <input id="quarter" type="checkbox" name="questionValues" value="q" />
-                    <label htmlFor="notes">6/8</label>
-                    <br />
-                    <input id="quarter" type="checkbox" name="questionValues" value="q" />
-                    <label htmlFor="notes">7/8</label>
-                    <br />
-                    <input id="quarter" type="checkbox" name="questionValues" value="q" />
-                    <label htmlFor="notes">9/8</label>
-                    <br />
-                    <input id="quarter" type="checkbox" name="questionValues" value="q" />
-                    <label htmlFor="notes">12/8</label>
-                  </div>
-                </div>
+                <fieldset>
+                  <h4>Note Value Options</h4>
+                  <Select
+                    id="note-selection"
+                    onChange={this.handleChangeOfAllowedValues}
+                    isMulti
+                    isSearchable
+                    options={NoteValueOptions}
+                    placeholder="Select note type(s)."
+                  />
+                  <label className="sr-only" htmlFor="time-signatures">
+                    Selection of Note Values
+                  </label>
+                </fieldset>
               </div>
             </div>
           </fieldset>
         </form>
+        {allowedMeters && (
+          <button className="btn btn-primary mt-4" type="button" onClick={this.handleToggleRender}>
+            {buttonText}
+          </button>
+        )}
+
         <ul>
           <li>Allow dots?</li>
           <li>Allow ties?</li>
         </ul>
-        <div id="questions">
-          {timeSigs.map((time, index) => (
-            <QuestionComponent
-              timeSignature={time}
-              noteCounte={questionCount}
-              noteTypes={questionTypes}
-              key={`ts-${index}`}
-            />
-          ))}
-        </div>
+        {renderWorksheet && (
+          <div id="questions">
+            {timeSigs.map((time, index) => (
+              <QuestionComponent
+                allowedNotes={allowedNotes}
+                timeSignature={time}
+                noteTypes={questionTypes}
+                key={`ts-${index}`}
+              />
+            ))}
+          </div>
+        )}
       </DefaultTemplate>
     );
   }

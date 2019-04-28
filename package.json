@@ -12,7 +12,8 @@
     "react-dom": "^16.8.6",
     "react-router": "^5.0.0",
     "react-router-dom": "^5.0.0",
-    "react-scripts": "2.1.8",
+    "react-scripts": "3.0",
+    "react-select": "^2.4.3",
     "vexflow": "^1.2.89"
   },
   "scripts": {
@@ -40,6 +41,6 @@
     "eslint-plugin-react": "^7.12.4",
     "node-sass": "^4.11.0",
     "prettier": "^1.16.4",
-    "react-scripts": "^2.1.8"
+    "react-scripts": "^3.0.0"
   }
 }
