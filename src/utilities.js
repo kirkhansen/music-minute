@@ -5,6 +5,7 @@ function getBeatsPerMeasure(timeSignature) {
 }
 
 function getNoteTypeForBeat(timeSignature) {
+    console.log(timeSignature);
     return +timeSignature.split('/')[1];
 }
 
@@ -85,8 +86,17 @@ function test(item, bpm) {
     return false;
 }
 
-function getRandomTimeSignature() {
-    return TimeSignatures[Math.floor(Math.random() * Math.floor(TimeSignatures.length))];
+function getRandomTimeSignature(allowedMeters) {
+    return allowedMeters[Math.floor(Math.random() * Math.floor(allowedMeters.length))];
+}
+
+function getXRandomTimeSignaturesFromAllowed(count, allowedMeters){
+    console.log(allowedMeters);
+    const timeSignatureArray = [];
+    for (let i = 0; i < count; i += 1) {
+        timeSignatureArray.push(allowedMeters[Math.floor(Math.random() * Math.floor(allowedMeters.length))]);
+    }
+    return timeSignatureArray;
 }
 
 function getXRandomTimeSignatures(count) {
@@ -142,7 +152,8 @@ export {
     finishMeasure,
     getXRandomTimeSignatures,
     getNoteSuffix,
-    getAllowedNotesFromTimeSignatureAndActiveNotes
+    getAllowedNotesFromTimeSignatureAndActiveNotes,
+    getXRandomTimeSignaturesFromAllowed
 };
 
 // whole: {

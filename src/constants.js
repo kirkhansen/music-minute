@@ -24,12 +24,12 @@ export const TimeSignatureOptions = [
   ];
 
   export const NoteValueOptions = [
-    { value: 'w', label: 'Whole', },
-    { value: 'h', label: 'Half', },
-    { value: 'q', label: 'Quarter', },
-    { value: '8', label: 'Eighth', },
-    { value: '16', label: 'Sixteenth', },
-    { value: '32', label: 'Thirty-Second', },
+    { value: 'w', label: '𝅝', },
+    { value: 'h', label: '𝅗𝅥', },
+    { value: 'q', label: '♩', },
+    { value: '8', label: '𝅘𝅥𝅮', },
+    { value: '16', label: '𝅘𝅥𝅯', },
+    { value: '32', label: '𝅘𝅥𝅰', },
   ];
 
 export const NoteValues = {

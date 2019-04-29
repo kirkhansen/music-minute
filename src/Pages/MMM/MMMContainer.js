@@ -3,18 +3,18 @@ import Select from 'react-select';
 
 import QuestionComponent from '../../Components/QuestionComponent';
 import { NoteValues, TimeSignatures, TimeSignatureOptions, NoteValueOptions } from '../../constants';
-import { getRandomTimeSignature, getXRandomTimeSignatures } from '../../utilities';
+import { getRandomTimeSignature, getXRandomTimeSignatures,getXRandomTimeSignaturesFromAllowed } from '../../utilities';
 import DefaultTemplate from '../Templates/DefaultTemplate';
 
 class MMMContainer extends Component {
   constructor(props) {
-    const questionCount = 10;
+    const questionCount = 12;
     super(props);
     this.state = {
       questionTypes: 0,
       questionCount: questionCount,
       renderWorksheet: false,
-      timeSigs: getXRandomTimeSignatures(questionCount),
+      timeSigs: [],
       allowedNotes: NoteValues,
       allowedMeters: null,
     };
@@ -29,16 +29,19 @@ class MMMContainer extends Component {
   componentWillUnmount() {
     this.timesSigs = [];
   }
+
   handleToggleRender() {
-    const { renderWorksheet } = this.state;
+    const { renderWorksheet, allowedMeters } = this.state;
+    console.log(getXRandomTimeSignaturesFromAllowed(10, allowedMeters));
     this.setState({
       renderWorksheet: !renderWorksheet,
+      timeSigs: getXRandomTimeSignaturesFromAllowed(12, allowedMeters),
     });
   }
+
   handleChangeQuestionTypes(e) {
     this.setState({
       questionTypes: +e.currentTarget.value,
-      // timeSigs: getXRandomTimeSignatures(this.state.questionCount),
     });
   }
 
@@ -64,15 +67,22 @@ class MMMContainer extends Component {
   }
 
   handleMeterChange(e) {
+    const meters = [];
+    for (let i = 0; i < e.length; i+=1) (
+      meters.push(e[i].value)
+    )
+
     this.setState({
-      allowedMeters: e,
+      allowedMeters: meters,
     });
   }
+
   handleChangeQuestionCount(e) {
     this.setState({
       questionCount: +e.currentTarget.value,
     });
   }
+
   render() {
     const { questionCount, questionTypes, timeSigs, renderWorksheet, allowedNotes, allowedMeters } = this.state;
     const allowedNotesKeys = Object.keys(allowedNotes);
@@ -178,18 +188,17 @@ class MMMContainer extends Component {
           </button>
         )}
 
-        <ul>
-          <li>Allow dots?</li>
-          <li>Allow ties?</li>
-        </ul>
+
         {renderWorksheet && (
           <div id="questions">
             {timeSigs.map((time, index) => (
               <QuestionComponent
                 allowedNotes={allowedNotes}
                 timeSignature={time}
+                allowedMeters={allowedMeters}
                 noteTypes={questionTypes}
                 key={`ts-${index}`}
+                identifier={`ts-${index}`}
               />
             ))}
           </div>

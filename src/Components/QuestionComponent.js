@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import Vex from 'vexflow';
 
 import {
@@ -10,61 +10,95 @@ import {
   getRandomFromAllowedNotes,
   finishMeasure,
   getNoteSuffix,
+  getXRandomTimeSignaturesFromAllowed,
 } from '../utilities';
 
 class QuestionComponent extends Component {
   constructor(props) {
     super(props);
-    this.timeSig = getRandomTimeSignature();
-  }
-  componentDidUpdate() {
-    const { noteTypes, allowedNotes } = this.props;
-    console.log(`Allowed Notes By User ${allowedNotes}`);
 
-    const noteSuffix = getNoteSuffix(noteTypes);
-    const OutLowedNotes = getAllowedNotesFromTimeSignatureAndActiveNotes(this.timeSig, allowedNotes);
-    console.log(OutLowedNotes);
-    const pickedNote = getRandomFromAllowedNotes(OutLowedNotes);
-    const container = document.getElementById('test');
-    var renderer = new Vex.Flow.Renderer(container, Vex.Flow.Renderer.Backends.SVG);
-    renderer.resize(150, 150);
-    var ctx = renderer.getContext();
-    var stave = new Vex.Flow.Stave(10, 40, 120);
-    stave.setConfigForLines([
+    const {allowedNotes, identifier, noteTypes} = props;
+    const timeSignature = getRandomTimeSignature(props.allowedMeters);
+    const noteChoices = getAllowedNotesFromTimeSignatureAndActiveNotes(timeSignature, allowedNotes);
+    const randomNote = getRandomFromAllowedNotes(noteChoices);
+
+
+    this.state = {
+      sTimeSignature : timeSignature,
+      sAllowedNotes :  noteChoices,
+      sPickedNote : randomNote, 
+      sNumberOfBeats : getBeatsPerMeasure(timeSignature),
+      sBeatValue : getNoteTypeForBeat(timeSignature),
+      sId : identifier,
+      sNoteSuffix: getNoteSuffix(noteTypes),
+    }
+
+    // VEXFLOW SETUP
+    this.clefType = 'percussion';
+    this.fakeClefType = 'treble';
+    this.notePosition = ['b/4'];
+    this.barType = 'double';
+    this.lineConfig = [
       { visible: false },
       { visible: false },
       { visible: true },
       { visible: false },
       { visible: false },
-    ]);
+    ];
+
+    
+  }
+
+  componentDidUpdate() {
+    const { sTimeSignature, sAllowedNotes, sNoteSuffix, sPickedNote } = this.state;
+
+    const { noteTypes, identifier } = this.props;
+    const { timeSig, allowedNotes } = this.state;
+    console.log(`Allowed Notes By User ${allowedNotes}`);
+
+    const noteSuffix = getNoteSuffix(noteTypes);
+    const OutLowedNotes = getAllowedNotesFromTimeSignatureAndActiveNotes(timeSig, allowedNotes);
+    console.log(OutLowedNotes);
+    const pickedNote = getRandomFromAllowedNotes(OutLowedNotes);
+    const noteContainer = document.createElement('div')
+    noteContainer.id = identifier;
+    noteContainer.classList.add('note-question', 'col-sm-2');
+    const rowContainer = document.getElementById('note-container-row');
+    rowContainer.appendChild(noteContainer);
+
+    var renderer = new Vex.Flow.Renderer(identifier, Vex.Flow.Renderer.Backends.SVG);
+    renderer.resize(150, 150);
+    var ctx = renderer.getContext();
+    var stave = new Vex.Flow.Stave(10, 40, 120);
+    stave.setConfigForLines(this.lineConfig);
     stave
-      .addClef('percussion')
-      .addTimeSignature(this.timeSig)
-      .setEndBarType('double');
+      .addClef(this.clefType)
+      .addTimeSignature(sTimeSignature)
+      .setEndBarType(this.barType);
     var note = [];
-    if (getBeatsPerMeasure(this.timeSig) - pickedNote.normalizedDuration === 0) {
-      note.push(new Vex.Flow.StaveNote({ clef: 'treble', keys: ['b/4'], duration: pickedNote.vfNotation }));
+    if (getBeatsPerMeasure(sTimeSignature) - sPickedNote.normalizedDuration === 0) {
+      note.push(new Vex.Flow.StaveNote({ clef: this.fakeClefType, keys: this.notePosition, duration: pickedNote.vfNotation }));
     } else {
       // Add the note that will show up
-      note.push(new Vex.Flow.StaveNote({ clef: 'treble', keys: ['b/4'], duration: `${pickedNote.vfNotation}${noteSuffix}` }));
+      note.push(new Vex.Flow.StaveNote({ clef: this.fakeClefType, keys: this.notePosition, duration: `${pickedNote.vfNotation}${noteSuffix}` }));
 
-      const remainingBeats = getBeatsPerMeasure(this.timeSig) - pickedNote.normalizedDuration;
+      const remainingBeats = getBeatsPerMeasure(sTimeSignature) - pickedNote.normalizedDuration;
       const match = OutLowedNotes.find(item => item.normalizedDuration === remainingBeats);
 
-      if (match) note.push(new Vex.Flow.GhostNote({ clef: 'treble', keys: ['b/4'], duration: match.vfNotation }));
+      if (match) note.push(new Vex.Flow.GhostNote({ clef: this.fakeClefType, keys: this.notePosition, duration: match.vfNotation }));
       else {
         const remainingNotes = finishMeasure(remainingBeats, allowedNotes);
         remainingNotes.forEach(index => {
           note.push(
-            new Vex.Flow.GhostNote({ clef: 'treble', keys: ['b/4'], duration:  allowedNotes[index].vfNotation })
+            new Vex.Flow.GhostNote({ clef: this.fakeClefType, keys: this.notePosition, duration:  allowedNotes[index].vfNotation })
           );
         });
       }
     }
 
     var voice = new Vex.Flow.Voice({
-      num_beats: getBeatsPerMeasure(this.timeSig),
-      beat_value: getNoteTypeForBeat(this.timeSig),
+      num_beats: getBeatsPerMeasure(sTimeSignature),
+      beat_value: getNoteTypeForBeat(sTimeSignature),
     });
     voice.addTickables(note);
     new Vex.Flow.Formatter().joinVoices([voice]).format([voice], 120);
@@ -72,57 +106,51 @@ class QuestionComponent extends Component {
     voice.draw(ctx, stave);
   }
   componentDidMount() {
-    console.log(`The time signature: ${this.timeSig}`);
-    const { noteTypes, allowedNotes } = this.props;
-    console.log(`All Possible Notes: ${JSON.stringify(allowedNotes)}`);
-    console.log(`Allowed Notes By Time Signature: ${JSON.stringify(getAllowedNotesFromTimeSignature(this.timeSig))}`);
-    console.log(`Allowed Notes By User: ${JSON.stringify(getAllowedNotesFromTimeSignatureAndActiveNotes(this.timeSig, allowedNotes))}`)
-    const noteSuffix = getNoteSuffix(noteTypes);
-    const OutLowedNotes = getAllowedNotesFromTimeSignatureAndActiveNotes(this.timeSig, allowedNotes);
-    const pickedNote = getRandomFromAllowedNotes(OutLowedNotes);
-    console.log(`Picked Note: ${JSON.stringify(getRandomFromAllowedNotes(OutLowedNotes))}`);
-    const container = document.getElementById('test');
-    var renderer = new Vex.Flow.Renderer(container, Vex.Flow.Renderer.Backends.SVG);
+    const { sTimeSignature, sAllowedNotes, sNoteSuffix, sPickedNote } = this.state;
+    console.log(`Allowed Notes By Time Signature and User: ${JSON.stringify(getAllowedNotesFromTimeSignature(sTimeSignature))}`);
+    console.log(`Picked Note: ${sPickedNote}`);
+    const noteContainer = document.createElement('div');
+    noteContainer.id = this.identifier;
+    noteContainer.classList.add('note-question', 'col-sm-2');
+    const rowContainer = document.getElementById('note-container-row');
+    rowContainer.appendChild(noteContainer);
+    var renderer = new Vex.Flow.Renderer(noteContainer, Vex.Flow.Renderer.Backends.SVG);
     renderer.resize(150, 150);
     var ctx = renderer.getContext();
     var stave = new Vex.Flow.Stave(10, 40, 120);
-    stave.setConfigForLines([
-      { visible: false },
-      { visible: false },
-      { visible: true },
-      { visible: false },
-      { visible: false },
-    ]);
+    stave.setConfigForLines(this.lineConfig);
     stave
-      .addClef('percussion')
-      .addTimeSignature(this.timeSig)
-      .setEndBarType('double');
+      .addClef(this.clefType)
+      .addTimeSignature(sTimeSignature)
+      .setEndBarType(this.barType);
     var note = [];
-    if (getBeatsPerMeasure(this.timeSig) - pickedNote.normalizedDuration === 0) {
-      note.push(new Vex.Flow.StaveNote({ clef: 'treble', keys: ['b/4'], duration: pickedNote.vfNotation }));
+    if (getBeatsPerMeasure(sTimeSignature) - sPickedNote.normalizedDuration === 0) {
+      note.push(new Vex.Flow.StaveNote({ clef: this.fakeClefType, keys: this.notePosition, duration: sPickedNote.vfNotation }));
     } else {
       // Add the note that will show up
-      note.push(new Vex.Flow.StaveNote({ clef: 'treble', keys: ['b/4'], duration: `${pickedNote.vfNotation}${noteSuffix}` }));
+    note.push(new Vex.Flow.StaveNote({ clef: this.fakeClefType, keys: this.notePosition, duration: `${sPickedNote.vfNotation}${sNoteSuffix}` }));
 
-      const remainingBeats = getBeatsPerMeasure(this.timeSig) - pickedNote.normalizedDuration;
+      const remainingBeats = getBeatsPerMeasure(sTimeSignature) - sPickedNote.normalizedDuration;
       console.log(`Remaining Beats: ${remainingBeats}`)
       
-      const match = getAllowedNotesFromTimeSignature(this.timeSig).find(item => item.normalizedDuration === remainingBeats);
+      const match = getAllowedNotesFromTimeSignature(sTimeSignature).find(item => item.normalizedDuration === remainingBeats);
 
-      if (match) note.push(new Vex.Flow.GhostNote({ clef: 'treble', keys: ['b/4'], duration: match.vfNotation }));
+      if (match) {
+        note.push(new Vex.Flow.GhostNote({ clef: this.fakeClefType, keys: this.notePosition, duration: match.vfNotation }));
+      }
       else {
-        const remainingNotes = finishMeasure(remainingBeats, getAllowedNotesFromTimeSignature(this.timeSig));
+        const remainingNotes = finishMeasure(remainingBeats, getAllowedNotesFromTimeSignature(sTimeSignature));
         remainingNotes.forEach(index => {
           note.push(
-            new Vex.Flow.GhostNote({ clef: 'treble', keys: ['b/4'], duration:  getAllowedNotesFromTimeSignature(this.timeSig)[index].vfNotation })
+            new Vex.Flow.GhostNote({ clef: this.fakeClefType, keys: this.notePosition, duration:  getAllowedNotesFromTimeSignature(sTimeSignature)[index].vfNotation })
           );
         });
       }
     }
 
     var voice = new Vex.Flow.Voice({
-      num_beats: getBeatsPerMeasure(this.timeSig),
-      beat_value: getNoteTypeForBeat(this.timeSig),
+      num_beats: getBeatsPerMeasure(sTimeSignature),
+      beat_value: getNoteTypeForBeat(sTimeSignature),
     });
     voice.addTickables(note);
     new Vex.Flow.Formatter().joinVoices([voice]).format([voice], 120);
@@ -130,7 +158,11 @@ class QuestionComponent extends Component {
     voice.draw(ctx, stave);
   }
   render() {
-    return <div id="test" />;
+    return (
+    <Fragment>
+      <div id="note-container-row" className="row"></div>
+    </Fragment>
+    );
   }
 }
 
