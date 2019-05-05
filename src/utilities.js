@@ -1,14 +1,34 @@
 import { TimeSignatures, NoteValues } from './constants';
 
+/**
+ * Returns the number of beats per measure given a time signature
+ *
+ * @param   {string}  timeSignature  format of n/x where n and x are numbers
+ *
+ * @return  {integer}                 returns an integer
+ */
 function getBeatsPerMeasure(timeSignature) {
     return +timeSignature.split('/')[0];
 }
 
+/**
+ * Returns an integer value depicting the note type that get's one beat
+ *
+ * @param   {string}  timeSignature  format of n/x where n and x are numbers
+ *
+ * @return  {integer}                 returns an integer
+ */
 function getNoteTypeForBeat(timeSignature) {
-    console.log(timeSignature);
     return +timeSignature.split('/')[1];
 }
 
+/**
+ * [getNoteValuesFromTimeSignature description]
+ *
+ * @param   {string}  timeSignature  format of n/x where n and x are numbers
+ *
+ * @return  {array}                 returns an array of objects
+ */
 function getNoteValuesFromTimeSignature(timeSignature) {
     const beatValue = getNoteTypeForBeat(timeSignature);
     // find the object with the matching numeric designation
@@ -37,7 +57,20 @@ function getNoteValuesFromTimeSignature(timeSignature) {
     });
     return ret;
 }
-
+/**
+ * [getNormalizedDuration description]
+ *
+ * @param   {integer}  duration    [duration description]
+ * @param   {integer}  multiplier  [multiplier description]
+ *
+ * @return  {integer}              [return description]
+ */
+function getNormalizedDuration(duration, multiplier) {
+    return duration * multiplier;
+}
+function getMultiplier(duration) {
+    return ( 1 / duration );
+}
 function getNoteValuesFromTimeSignatureAndCustomNotes(timeSignature, notes) {
     const beatValue = getNoteTypeForBeat(timeSignature);
     // find the object with the matching numeric designation
@@ -62,6 +95,8 @@ function getNoteValuesFromTimeSignatureAndCustomNotes(timeSignature, notes) {
         tmp.normalizedDuration = notes[item].duration * multiplier;
         tmp.vfNotation = notes[item].vfNotation;
         tmp.active = notes[item].active;
+        tmp.duration = notes[item].duration;
+        tmp.numericDesignation = notes[item].numericDesignation;
         ret.push(tmp);
     });
     return ret;
@@ -74,6 +109,7 @@ function getAllowedNotesFromTimeSignature(timeSignature) {
 }
 
 function getAllowedNotesFromTimeSignatureAndActiveNotes(timeSignature, allowedNotes) {
+
     const noteValues = getNoteValuesFromTimeSignatureAndCustomNotes(timeSignature, allowedNotes);
     const bpm = getBeatsPerMeasure(timeSignature);
     return noteValues.filter(test, bpm);
@@ -91,7 +127,6 @@ function getRandomTimeSignature(allowedMeters) {
 }
 
 function getXRandomTimeSignaturesFromAllowed(count, allowedMeters){
-    console.log(allowedMeters);
     const timeSignatureArray = [];
     for (let i = 0; i < count; i += 1) {
         timeSignatureArray.push(allowedMeters[Math.floor(Math.random() * Math.floor(allowedMeters.length))]);
@@ -153,7 +188,9 @@ export {
     getXRandomTimeSignatures,
     getNoteSuffix,
     getAllowedNotesFromTimeSignatureAndActiveNotes,
-    getXRandomTimeSignaturesFromAllowed
+    getXRandomTimeSignaturesFromAllowed,
+    getNormalizedDuration,
+    getMultiplier,
 };
 
 // whole: {

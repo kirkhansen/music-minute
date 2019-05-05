@@ -8,7 +8,7 @@ import DefaultTemplate from '../Templates/DefaultTemplate';
 
 class MMMContainer extends Component {
   constructor(props) {
-    const questionCount = 12;
+    const questionCount = 1;
     super(props);
     this.state = {
       questionTypes: 0,
@@ -31,11 +31,11 @@ class MMMContainer extends Component {
   }
 
   handleToggleRender() {
-    const { renderWorksheet, allowedMeters } = this.state;
+    const { renderWorksheet, allowedMeters, questionCount} = this.state;
     console.log(getXRandomTimeSignaturesFromAllowed(10, allowedMeters));
     this.setState({
       renderWorksheet: !renderWorksheet,
-      timeSigs: getXRandomTimeSignaturesFromAllowed(12, allowedMeters),
+      timeSigs: getXRandomTimeSignaturesFromAllowed(questionCount, allowedMeters),
     });
   }
 
@@ -191,6 +191,7 @@ class MMMContainer extends Component {
 
         {renderWorksheet && (
           <div id="questions">
+          <div id="note-container-row" className="row">
             {timeSigs.map((time, index) => (
               <QuestionComponent
                 allowedNotes={allowedNotes}
@@ -202,7 +203,9 @@ class MMMContainer extends Component {
               />
             ))}
           </div>
+          </div>
         )}
+
       </DefaultTemplate>
     );
   }
