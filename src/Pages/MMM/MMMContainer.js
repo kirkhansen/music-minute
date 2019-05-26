@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Select from 'react-select';
-
+import cx from 'classnames';
 import QuestionComponent from '../../Components/QuestionComponent';
 import ErrorBoundary from '../../Components/ErrorBoundary';
 import { NoteValues, TimeSignatureOptions, NoteValueOptions } from '../../constants';
@@ -67,7 +67,6 @@ class MMMContainer extends Component {
     }
 
     if (this.state.allowedMeters && this.state.allowedMeters.length !== 0 && hasNotes === true) {
-      
     }
     this.setState({
       allowedNotes: copy,
@@ -95,12 +94,20 @@ class MMMContainer extends Component {
   }
 
   render() {
-    const { questionCount, questionTypes, timeSigs, renderWorksheet, allowedNotes, allowedMeters, canRender } = this.state;
-    const buttonText = renderWorksheet ? 'Clear Progress' : 'Render Worksheet';
+    const {
+      questionCount,
+      questionTypes,
+      timeSigs,
+      renderWorksheet,
+      allowedNotes,
+      allowedMeters,
+      canRender,
+    } = this.state;
+    const buttonText = renderWorksheet ? 'Reset' : 'Render Worksheet';
 
     return (
       <DefaultTemplate>
-        <form>
+        <form className={cx({ hide: renderWorksheet })}>
           <div className="row">
             <div className="col-3">
               <fieldset>
@@ -151,52 +158,60 @@ class MMMContainer extends Component {
                 />
               </fieldset>
             </div>
+            <div className="col-6">
+              <div className="row">
+                <div className="col-12">
+                  <fieldset>
+                    <h4>Time Signatures</h4>
+                    <Select
+                      id="time-signatures"
+                      onChange={this.handleMeterChange}
+                      isMulti
+                      isSearchable
+                      options={TimeSignatureOptions}
+                      placeholder="Select time signature(s)."
+                    />
+                    <label className="sr-only" htmlFor="time-signatures">
+                      Selection of time signatures
+                    </label>
+                  </fieldset>
+                </div>
+              </div>
+              <div className="row">
+                <div className="col-12">
+                  <fieldset>
+                    <h4>Note Value Options</h4>
+                    <Select
+                      id="note-selection"
+                      onChange={this.handleChangeOfAllowedValues}
+                      isMulti
+                      isSearchable
+                      options={NoteValueOptions}
+                      placeholder="Select note type(s)."
+                    />
+                    <label className="sr-only" htmlFor="time-signatures">
+                      Selection of Note Values
+                    </label>
+                  </fieldset>
+                </div>
+              </div>
+            </div>
           </div>
           <hr />
-          <fieldset>
-            <div className="row">
-              <div className="col-6">
-                <fieldset>
-                  <h4>Time Signatures</h4>
-                  <Select
-                    id="time-signatures"
-                    onChange={this.handleMeterChange}
-                    isMulti
-                    isSearchable
-                    options={TimeSignatureOptions}
-                    placeholder="Select time signature(s)."
-                  />
-                  <label className="sr-only" htmlFor="time-signatures">
-                    Selection of time signatures
-                  </label>
-                </fieldset>
-              </div>
-            </div>
-          </fieldset>
-          <fieldset>
-            <div className="row">
-              <div className="col-6">
-                <fieldset>
-                  <h4>Note Value Options</h4>
-                  <Select
-                    id="note-selection"
-                    onChange={this.handleChangeOfAllowedValues}
-                    isMulti
-                    isSearchable
-                    options={NoteValueOptions}
-                    placeholder="Select note type(s)."
-                  />
-                  <label className="sr-only" htmlFor="time-signatures">
-                    Selection of Note Values
-                  </label>
-                </fieldset>
-              </div>
-            </div>
-          </fieldset>
         </form>
-          <button className="btn btn-primary mt-4" type="button" onClick={this.handleToggleRender} disabled={!canRender}>
-            {buttonText}
-          </button>
+        <button className="btn btn-primary mt-4 screen-only" type="button" onClick={this.handleToggleRender} disabled={!canRender}>
+          {buttonText}
+        </button>
+        <button
+          id="print-value-worksheet"
+          onClick={function() {
+            window.print();
+          }}
+          className={cx({ hide: !renderWorksheet }, 'btn', 'screen-only', 'btn-secondary', 'mt-4')}
+          type="button"
+        >
+          <i className="fas fa-print" /> Print
+        </button>
 
         {renderWorksheet && (
           <div id="questions">

@@ -7,3 +7,8 @@ footer {
     text-align: center;
     font-size: $small-font-size;
 }
+
+@media print { 
+    /* All your print styles go here */
+    footer { display: none !important; } 
+}

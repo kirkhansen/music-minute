@@ -184,7 +184,7 @@ class QuestionComponent extends Component {
     const questionContainerClass = `${sId} quest-container`;
     return (
     <div className={questionContainerClass}>
-      <button type="button" data-id={sId} onClick={this.handleClick}><i className="fa fa-redo-alt"></i></button>
+      <button type="button" data-id={sId} onClick={this.handleClick}><i className="screen-only fa fa-redo-alt"></i></button>
     </div>
     );
   }

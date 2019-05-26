@@ -11,7 +11,7 @@ class DefaultTemplate extends React.PureComponent {
     const { children } = this.props;
     return (
       <Fragment>
-        <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+        <nav className="screen-only navbar navbar-expand-lg navbar-dark bg-dark">
           <Link className="navbar-brand" to={RoutePath.HOME}>
             <i className="fas fa-music"></i> Mad Minute Music 2<sup><small>.5</small></sup>
           </Link>

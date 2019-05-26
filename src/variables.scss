@@ -1122,6 +1122,14 @@ $headings-color:              $gray-500;
 // $print-page-size:                   a3 !default;
 // $print-body-min-width:              map-get($grid-breakpoints, "lg") !default;
 
+
+@media print {
+  /* All your print styles go here */
+  .screen-only {
+    display: none !important;
+  }
+}
+
 @import '~bootstrap/scss/functions';
 @import '~bootstrap/scss/variables';
 @import '~bootstrap/scss/mixins';
