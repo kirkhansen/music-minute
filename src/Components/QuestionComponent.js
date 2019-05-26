@@ -1,5 +1,7 @@
 import React, { Component, Fragment } from 'react';
+import cx from 'classnames';
 import Vex from 'vexflow';
+import './QuestionComponent.scss';
 
 import {
   getBeatsPerMeasure,
@@ -102,11 +104,21 @@ class QuestionComponent extends Component {
 
   componentDidMount() {
     const { sTimeSignature, sAllowedNotes, sId, sNoteSuffix, sPickedNote } = this.state;
+
     const noteContainer = document.createElement('div');
+    // const refreshButton = document.createElement('i');
+    // refreshButton.classList.add('fa', 'fa-redo-alt');
+    // refreshButton.setAttribute('data-id', sId);
+    // refreshButton.setAttribute('onClick', this.handleClick.bind(this));
+    // // className="fa fa-redo-alt" data-id={sId} onClick={this.handleClick}
     noteContainer.id = sId;
     noteContainer.classList.add('note-question', 'col-sm-2');
+    // noteContainer.appendChild(refreshButton);
+
     const rowContainer = document.getElementById('note-container-row');
-    rowContainer.appendChild(noteContainer);
+    const container = document.getElementsByClassName(sId)[0];
+    container.appendChild(noteContainer);
+    rowContainer.appendChild(container);
     var renderer = new Vex.Flow.Renderer(noteContainer, Vex.Flow.Renderer.Backends.SVG);
     renderer.resize(150, 150);
     var ctx = renderer.getContext();
@@ -151,10 +163,11 @@ class QuestionComponent extends Component {
 
   handleClick(e) {
     const { sAllowedMeters, sAllowedNotes } = this.state;
+    const { allowedNotes } = this.props;
     const timeSignature = getRandomTimeSignature(sAllowedMeters);
     //send onr time signature not an array.
-
-    const noteChoices = getAllowedNotesFromTimeSignatureAndActiveNotes(timeSignature, sAllowedNotes);
+    // should we reset allowed notes?
+    const noteChoices = getAllowedNotesFromTimeSignatureAndActiveNotes(timeSignature, allowedNotes);
     const randomNote = getRandomFromAllowedNotes(noteChoices);
 
     this.setState({
@@ -168,10 +181,11 @@ class QuestionComponent extends Component {
   }
   render() {
     const { sId } = this.state;
+    const questionContainerClass = `${sId} quest-container`;
     return (
-    <Fragment>
-      <i className="fa fa-redo-alt" data-id={sId} onClick={this.handleClick}></i>
-    </Fragment>
+    <div className={questionContainerClass}>
+      <button type="button" data-id={sId} onClick={this.handleClick}><i className="fa fa-redo-alt"></i></button>
+    </div>
     );
   }
 }

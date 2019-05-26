@@ -1,14 +1,16 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import Select from 'react-select';
 
 import QuestionComponent from '../../Components/QuestionComponent';
-import { NoteValues, TimeSignatures, TimeSignatureOptions, NoteValueOptions } from '../../constants';
-import { getRandomTimeSignature, getXRandomTimeSignatures,getXRandomTimeSignaturesFromAllowed } from '../../utilities';
+import ErrorBoundary from '../../Components/ErrorBoundary';
+import { NoteValues, TimeSignatureOptions, NoteValueOptions } from '../../constants';
+import { getXRandomTimeSignaturesFromAllowed, checkForCustomNotes } from '../../utilities';
 import DefaultTemplate from '../Templates/DefaultTemplate';
+import './MMMContainer.scss';
 
 class MMMContainer extends Component {
   constructor(props) {
-    const questionCount = 1;
+    const questionCount = 20;
     super(props);
     this.state = {
       questionTypes: 0,
@@ -17,6 +19,7 @@ class MMMContainer extends Component {
       timeSigs: [],
       allowedNotes: NoteValues,
       allowedMeters: null,
+      hasCustomNotes: false,
     };
 
     this.handleChangeOfAllowedValues = this.handleChangeOfAllowedValues.bind(this);
@@ -31,7 +34,7 @@ class MMMContainer extends Component {
   }
 
   handleToggleRender() {
-    const { renderWorksheet, allowedMeters, questionCount} = this.state;
+    const { renderWorksheet, allowedMeters, questionCount } = this.state;
     console.log(getXRandomTimeSignaturesFromAllowed(10, allowedMeters));
     this.setState({
       renderWorksheet: !renderWorksheet,
@@ -49,6 +52,7 @@ class MMMContainer extends Component {
     const { allowedNotes } = this.state;
     const copy = allowedNotes;
     const keys = Object.keys(copy);
+    let hasNotes = false;
     for (let i = 0; i < keys.length; i += 1) {
       copy[keys[i]].active = false;
     }
@@ -57,35 +61,41 @@ class MMMContainer extends Component {
       for (let i = 0; i < keys.length; i += 1) {
         if (copy[keys[i]].vfNotation === e[x].value) {
           copy[keys[i]].active = true;
+          hasNotes = true;
         }
       }
     }
 
+    if (this.state.allowedMeters && this.state.allowedMeters.length !== 0 && hasNotes === true) {
+      
+    }
     this.setState({
       allowedNotes: copy,
+      canRender: this.state.allowedMeters && this.state.allowedMeters.length !== 0 && hasNotes === true,
     });
   }
 
   handleMeterChange(e) {
+    console.log(e);
     const meters = [];
-    for (let i = 0; i < e.length; i+=1) (
-      meters.push(e[i].value)
-    )
-
+    for (let i = 0; i < e.length; i += 1) meters.push(e[i].value);
+    console.log(meters);
+    const customNotes = checkForCustomNotes(this.state.allowedNotes);
     this.setState({
       allowedMeters: meters,
+      canRender: meters && customNotes,
     });
   }
 
   handleChangeQuestionCount(e) {
+    console.log(e);
     this.setState({
       questionCount: +e.currentTarget.value,
     });
   }
 
   render() {
-    const { questionCount, questionTypes, timeSigs, renderWorksheet, allowedNotes, allowedMeters } = this.state;
-    const allowedNotesKeys = Object.keys(allowedNotes);
+    const { questionCount, questionTypes, timeSigs, renderWorksheet, allowedNotes, allowedMeters, canRender } = this.state;
     const buttonText = renderWorksheet ? 'Clear Progress' : 'Render Worksheet';
 
     return (
@@ -134,9 +144,11 @@ class MMMContainer extends Component {
                   name="numberOfQuestions"
                   min="1"
                   max="60"
+                  default={questionCount}
+                  placeholder={questionCount}
                   onChange={this.handleChangeQustionCount}
+                  onInput={this.handleChangeQuestionCount}
                 />
-                <label htmlFor="number-of-questions">{questionCount}</label>
               </fieldset>
             </div>
           </div>
@@ -182,30 +194,28 @@ class MMMContainer extends Component {
             </div>
           </fieldset>
         </form>
-        {allowedMeters && (
-          <button className="btn btn-primary mt-4" type="button" onClick={this.handleToggleRender}>
+          <button className="btn btn-primary mt-4" type="button" onClick={this.handleToggleRender} disabled={!canRender}>
             {buttonText}
           </button>
-        )}
-
 
         {renderWorksheet && (
           <div id="questions">
-          <div id="note-container-row" className="row">
-            {timeSigs.map((time, index) => (
-              <QuestionComponent
-                allowedNotes={allowedNotes}
-                timeSignature={time}
-                allowedMeters={allowedMeters}
-                noteTypes={questionTypes}
-                key={`ts-${index}`}
-                identifier={`ts-${index}`}
-              />
-            ))}
-          </div>
+            <div id="note-container-row" className="row">
+              {timeSigs.map((time, index) => (
+                <ErrorBoundary>
+                  <QuestionComponent
+                    allowedNotes={allowedNotes}
+                    timeSignature={time}
+                    allowedMeters={allowedMeters}
+                    noteTypes={questionTypes}
+                    key={`ts-${index}`}
+                    identifier={`ts-${index}`}
+                  />
+                </ErrorBoundary>
+              ))}
+            </div>
           </div>
         )}
-
       </DefaultTemplate>
     );
   }

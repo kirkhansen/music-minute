@@ -69,7 +69,7 @@ export const NoteValues = {
         active: false,
     },
     thirtysecond: {
-        properName: 'Thiry-Second Note',
+        properName: 'Thirty-Second Note',
         vfNotation: '32',
         duration: 0.03125,
         numericDesignation: 32,

@@ -115,8 +115,8 @@ function getAllowedNotesFromTimeSignatureAndActiveNotes(timeSignature, allowedNo
     return noteValues.filter(test, bpm);
 }
 
-function test(item, bpm) {
-    if (item.normalizedDuration <= bpm && item.active === true) {
+function test(item) {
+    if (item.normalizedDuration <= this && item.active === true) {
         return true;
     }
     return false;
@@ -177,6 +177,12 @@ function getNoteSuffix(type) {
     return 'r';
 }
 
+function checkForCustomNotes(allowedNotes) {
+    const allowedNotesArray = Object.values(allowedNotes);
+    
+    return allowedNotesArray.find(note => note.active === true);
+}
+
 export {
     getBeatsPerMeasure, 
     getNoteValuesFromTimeSignature, 
@@ -191,6 +197,7 @@ export {
     getXRandomTimeSignaturesFromAllowed,
     getNormalizedDuration,
     getMultiplier,
+    checkForCustomNotes,
 };
 
 // whole: {
