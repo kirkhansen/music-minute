@@ -1,0 +1,48 @@
+{
+  "name": "music-minute",
+  "homepage": "https://kirkhansen.github.io/music-minute",
+  "version": "0.0.1",
+  "dependencies": {
+    "babel-eslint": "^10.0.1",
+    "bootstrap": "^4.3.1",
+    "history": "^4.9.0",
+    "prop-types": "^15.7.2",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "react-router": "^5.0.0",
+    "react-router-dom": "^5.0.0",
+    "react-select": "^2.4.3",
+    "save": "^2.3.3",
+    "vexflow": "^1.2.89"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ],
+  "devDependencies": {
+    "babel-eslint": "^10.0.1",
+    "babel-plugin-macros": "^2.5.1",
+    "eslint": "^5.16.0",
+    "eslint-config-prettier": "^4.3.0",
+    "eslint-plugin-import": "^2.17.2",
+    "eslint-plugin-jsx-a11y": "^6.2.1",
+    "eslint-plugin-react": "^7.13.0",
+    "gh-pages": "^3.1.0",
+    "node-sass": "^4.12.0",
+    "prettier": "^1.17.1",
+    "react-scripts": "3.4.1"
+  }
+}
