@@ -1,5 +1,6 @@
 export const RoutePath = {
     HOME: '/',
+    HOME_GITHUB: '/music-minute',
     ABOUT: '/about',
     NAMES: '/create/names',
     VALUES: '/create/values'
