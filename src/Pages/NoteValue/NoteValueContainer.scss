@@ -1,0 +1,23 @@
+fieldset {
+  label {
+    margin-left: 5px;
+  }
+}
+form {
+  &.hide {
+    display: none;
+  }
+}
+#print-value-worksheet {
+  margin-left: 10px;
+  &.hide {
+    display: none;
+  }
+}
+
+@media print {
+  /* All your print styles go here */
+  .screen-only {
+    display: none !important;
+  }
+}

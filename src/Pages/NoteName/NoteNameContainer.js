@@ -3,12 +3,12 @@ import Select from 'react-select';
 import cx from 'classnames';
 import QuestionComponent from '../../Components/QuestionComponent';
 import ErrorBoundary from '../../Components/ErrorBoundary';
-import { NoteValues, TimeSignatureOptions, NoteValueOptions } from '../../constants';
-import { getXRandomTimeSignaturesFromAllowed, checkForCustomNotes } from '../../utilities';
+import { NoteValues, KeySignatureOptions, NoteValueOptions} from '../../constants';
+import {getXRandomTimeSignaturesFromAllowed} from "../../utilities";
 import DefaultTemplate from '../Templates/DefaultTemplate';
-import './MMMContainer.scss';
+import './NoteNameContainer.scss';
 
-class MMMContainer extends Component {
+class NoteNameContainer extends Component {
   constructor(props) {
     const questionCount = 20;
     super(props);
@@ -16,16 +16,15 @@ class MMMContainer extends Component {
       questionTypes: 0,
       questionCount: questionCount,
       renderWorksheet: false,
-      timeSigs: [],
       allowedNotes: NoteValues,
-      allowedMeters: null,
-      hasCustomNotes: false,
+      allowedKeySignatures: null,
+      keySignatures: [],
     };
 
     this.handleChangeOfAllowedValues = this.handleChangeOfAllowedValues.bind(this);
     this.handleChangeQuestionTypes = this.handleChangeQuestionTypes.bind(this);
     this.handleChangeQuestionCount = this.handleChangeQuestionCount.bind(this);
-    this.handleMeterChange = this.handleMeterChange.bind(this);
+    this.handleKeySignatureChange = this.handleKeySignatureChange.bind(this);
     this.handleToggleRender = this.handleToggleRender.bind(this);
   }
 
@@ -34,11 +33,10 @@ class MMMContainer extends Component {
   }
 
   handleToggleRender() {
-    const { renderWorksheet, allowedMeters, questionCount } = this.state;
-    console.log(getXRandomTimeSignaturesFromAllowed(10, allowedMeters));
+    const { renderWorksheet, allowedKeySignatures, questionCount } = this.state;
     this.setState({
       renderWorksheet: !renderWorksheet,
-      timeSigs: getXRandomTimeSignaturesFromAllowed(questionCount, allowedMeters),
+      keySignatures: getXRandomTimeSignaturesFromAllowed(questionCount, allowedKeySignatures),
     });
   }
 
@@ -66,23 +64,18 @@ class MMMContainer extends Component {
       }
     }
 
-    if (this.state.allowedMeters && this.state.allowedMeters.length !== 0 && hasNotes === true) {
-    }
     this.setState({
       allowedNotes: copy,
-      canRender: this.state.allowedMeters && this.state.allowedMeters.length !== 0 && hasNotes === true,
+      canRender: this.state.allowedKeySignatures && this.state.allowedKeySignatures.length !== 0 && hasNotes === true,
     });
   }
 
-  handleMeterChange(e) {
+  handleKeySignatureChange(e) {
     console.log(e);
-    const meters = [];
-    for (let i = 0; i < e.length; i += 1) meters.push(e[i].value);
-    console.log(meters);
-    const customNotes = checkForCustomNotes(this.state.allowedNotes);
+    const keySignatures = [];
+    for (let i = 0; i < e.length; i += 1) keySignatures.push(e[i].value);
     this.setState({
-      allowedMeters: meters,
-      canRender: meters && customNotes,
+      allowedKeySignatures: keySignatures,
     });
   }
 
@@ -97,7 +90,7 @@ class MMMContainer extends Component {
     const {
       questionCount,
       questionTypes,
-      timeSigs,
+      keySignatures,
       renderWorksheet,
       allowedNotes,
       allowedMeters,
@@ -109,40 +102,49 @@ class MMMContainer extends Component {
       <DefaultTemplate>
         <form className={cx({ hide: renderWorksheet })}>
           <div className="row">
-            <div className="col-3">
+            <div className="col-2">
               <fieldset>
-                <h3>Note Types</h3>
+                <h3>Clef</h3>
                 <input
-                  id="notes"
+                  id="treble"
                   type="radio"
                   name="questionTypes"
                   value="0"
                   onClick={this.handleChangeQuestionTypes}
                   defaultChecked
                 />
-                <label htmlFor="notes">Only Notes</label>
+                <label htmlFor="notes">Treble</label>
                 <br />
                 <input
-                  id="rests"
+                  id="bass"
                   type="radio"
                   name="questionTypes"
                   value="1"
                   onClick={this.handleChangeQuestionTypes}
                 />
-                <label htmlFor="rests">Only Rests</label>
+                <label htmlFor="bass">Bass</label>
                 <br />
                 <input
-                  id="notes|rests"
+                  id="alto"
                   type="radio"
                   name="questionTypes"
                   value="2"
                   onClick={this.handleChangeQuestionTypes}
                 />
-                <label htmlFor="notes">Notes &amp; Rests</label>
+                <label htmlFor="alto">Alto</label>
+                <br />
+                <input
+                  id="tenor"
+                  type="radio"
+                  name="questionTypes"
+                  value="3"
+                  onClick={this.handleChangeQuestionTypes}
+                />
+                <label htmlFor="tenor">Tenor</label>
               </fieldset>
             </div>
 
-            <div className="col-3">
+            <div className="col-2">
               <fieldset>
                 <h4>Number of Questions</h4>
                 <input
@@ -158,39 +160,21 @@ class MMMContainer extends Component {
                 />
               </fieldset>
             </div>
-            <div className="col-6">
+            <div className="col-2">
               <div className="row">
                 <div className="col-12">
                   <fieldset>
-                    <h4>Time Signatures</h4>
+                    <h4>Keys</h4>
                     <Select
-                      id="time-signatures"
-                      onChange={this.handleMeterChange}
+                      id="keys"
+                      onChange={this.handleKeySignatureChange}
                       isMulti
                       isSearchable
-                      options={TimeSignatureOptions}
-                      placeholder="Select time signature(s)."
+                      options={KeySignatureOptions}
+                      placeholder="Select key(s)"
                     />
-                    <label className="sr-only" htmlFor="time-signatures">
-                      Selection of time signatures
-                    </label>
-                  </fieldset>
-                </div>
-              </div>
-              <div className="row">
-                <div className="col-12">
-                  <fieldset>
-                    <h4>Note Value Options</h4>
-                    <Select
-                      id="note-selection"
-                      onChange={this.handleChangeOfAllowedValues}
-                      isMulti
-                      isSearchable
-                      options={NoteValueOptions}
-                      placeholder="Select note type(s)."
-                    />
-                    <label className="sr-only" htmlFor="time-signatures">
-                      Selection of Note Values
+                    <label className="sr-only" htmlFor="keys">
+                      Selection of key signature(s)
                     </label>
                   </fieldset>
                 </div>
@@ -216,7 +200,7 @@ class MMMContainer extends Component {
         {renderWorksheet && (
           <div id="questions">
             <div id="note-container-row" className="row">
-              {timeSigs.map((time, index) => (
+              {keySignatures.map((time, index) => (
                 <ErrorBoundary>
                   <QuestionComponent
                     allowedNotes={allowedNotes}
@@ -236,4 +220,4 @@ class MMMContainer extends Component {
   }
 }
 
-export default MMMContainer;
+export default NoteNameContainer;

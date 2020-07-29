@@ -74,3 +74,20 @@ export const NoteValues = {
         active: false,
     }
 }
+
+export const KeySignatureOptions = [
+    {"value": "flat-6", "label": "Gb Major / Eb minor"},
+    {"value": "flat-5", "label": "Db Major / Bb minor"},
+    {"value": "flat-4", "label": "Ab Major / F minor"},
+    {"value": "flat-3", "label": "Eb Major / F minor"},
+    {"value": "flat-2", "label": "Bb Major / G minor"},
+    {"value": "flat-1", "label": "F Major / D minor"},
+    {"value": "none", "label": "C Major / A minor"},
+    {"value": "sharp-1", "label": "G Major / E minor"},
+    {"value": "sharp-2", "label": "D Major / B minor"},
+    {"value": "sharp-3", "label": "A Major / F# minor"},
+    {"value": "sharp-4", "label": "E Major / C# minor"},
+    {"value": "sharp-5", "label": "B Major / G# minor"},
+    {"value": "sharp-6", "label": "F# Major / D# minor"},
+    {"value": "sharp-7", "label": "C# Major / A# minor"},
+]

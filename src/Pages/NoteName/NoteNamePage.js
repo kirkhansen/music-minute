@@ -1,8 +1,8 @@
 import React from 'react';
 
-const MMMPage = props => {
+const NoteNamePage = props => {
   return (
-   
+
       <div>
         <h1>{props.timeSig}</h1>
       </div>
@@ -10,4 +10,4 @@ const MMMPage = props => {
   );
 };
 
-export default MMMPage;
+export default NoteNamePage;
