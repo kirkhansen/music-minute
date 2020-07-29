@@ -1,8 +1,6 @@
 export const RoutePath = {
     HOME: '/',
     ABOUT: '/about',
-    CONTACT: '/contact',
-    CHANGES: '/changes',
     NAMES: '/create/names',
     VALUES: '/create/values'
 }

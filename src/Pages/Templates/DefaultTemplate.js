@@ -13,7 +13,7 @@ class DefaultTemplate extends React.PureComponent {
       <Fragment>
         <nav className="screen-only navbar navbar-expand-lg navbar-dark bg-dark">
           <Link className="navbar-brand" to={RoutePath.HOME}>
-            <i className="fas fa-music"></i> Mad Minute Music 2<sup><small>.5</small></sup>
+            <i className="fas fa-music"></i> Music Minute
           </Link>
           <button
             className="navbar-toggler"
@@ -34,19 +34,10 @@ class DefaultTemplate extends React.PureComponent {
               <NavLink activeClassName="active" className="nav-item nav-link" to={RoutePath.ABOUT}>
                 About
               </NavLink>
-              <NavLink activeClassName="active" className="nav-item nav-link" to={RoutePath.CHANGES}>
-                Changes
-              </NavLink>
-              <NavLink activeClassName="active" className="nav-item nav-link" to={RoutePath.CONTACT}>
-                Contact
-              </NavLink>
             </div>
           </div>
         </nav>
         <main>{children}</main>
-        <footer>
-           Mad Minute Music © Jeff Smykil 2012-{moment().format('YYYY')}
-        </footer>
       </Fragment>
     );
   }

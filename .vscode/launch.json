@@ -5,26 +5,11 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Chrome",
-            "type": "chrome",
+            "name": "Firefox",
+            "type": "firefox",
             "request": "launch",
             "url": "http://localhost:3000",
             "webRoot": "${workspaceRoot}/src"
-        },
-        {
-            "type": "node",
-            "name": "vscode-jest-tests",
-            "request": "launch",
-            "args": [
-                "test",
-                "--runInBand"
-            ],
-            "cwd": "${workspaceFolder}",
-            "console": "integratedTerminal",
-            "internalConsoleOptions": "neverOpen",
-            "runtimeExecutable": "${workspaceFolder}/node_modules/.bin/react-scripts",
-            "protocol": "inspector"
-            
         }
     ]
 }
