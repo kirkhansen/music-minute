@@ -9,7 +9,6 @@ import GenericNotFoundContainer from './Pages/Error/GenericNotFoundContainer';
 const AppRoutes = () => (
     <Switch>
         <Route exact path={RoutePath.HOME} component={HomeContainer} />
-        <Route exact path={RoutePath.HOME_GITHUB} component={HomeContainer} />
         <Route exact path={RoutePath.ABOUT} component={AboutContainer} />
         <Route exact path={RoutePath.NAMES} component={GenericNotFoundContainer} />
         <Route exact path={RoutePath.VALUES} component={MMMContainer} />

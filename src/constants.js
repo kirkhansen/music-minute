@@ -1,9 +1,8 @@
 export const RoutePath = {
-    HOME: '/',
-    HOME_GITHUB: '/music-minute',
-    ABOUT: '/about',
-    NAMES: '/create/names',
-    VALUES: '/create/values'
+    HOME: '/music-minute',
+    ABOUT: '/music-minute/about',
+    NAMES: '/music-minute/create/names',
+    VALUES: '/music-minute/create/values'
 }
 
 export const TimeSignatures = ['3/2', '2/2', '2/4', '3/4', '4/4', '5/4', '3/8', '5/8', '6/8', '9/8', '12/8']
