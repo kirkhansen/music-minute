@@ -1,6 +1,5 @@
 import React, { Fragment } from 'react';
 import { NavLink, Link } from 'react-router-dom';
-import moment from 'moment';
 
 import { RoutePath } from '../../constants';
 import './DefaultTemplate.scss';

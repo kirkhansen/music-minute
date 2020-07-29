@@ -1,5 +1,4 @@
-import React, { Component, Fragment } from 'react';
-import cx from 'classnames';
+import React, { Component} from 'react';
 import Vex from 'vexflow';
 import './QuestionComponent.scss';
 
@@ -28,7 +27,7 @@ class QuestionComponent extends Component {
       sTimeSignature : timeSignature,
       sAllowedNotes :  noteChoices,
       sAllowedMeters: props.allowedMeters,
-      sPickedNote : randomNote, 
+      sPickedNote : randomNote,
       sNumberOfBeats : getBeatsPerMeasure(timeSignature),
       sBeatValue : getNoteTypeForBeat(timeSignature),
       sId : identifier,
@@ -54,7 +53,7 @@ class QuestionComponent extends Component {
   componentDidUpdate() {
     console.log(this.state);
     // Find the right question in the DOM
-    const {sId, sAllowedMeters, sAllowedNotes, sTimeSignature, sPickedNote, sNumberOfBeats, sNoteSuffix, sBeatValue} = this.state;
+    const {sId, sTimeSignature, sPickedNote, sNoteSuffix} = this.state;
     // Empty the question but keep the container.
     document.getElementById(sId).innerHTML = '';
     const noteContainer = document.getElementById(sId);
@@ -76,7 +75,7 @@ class QuestionComponent extends Component {
     note.push(new Vex.Flow.StaveNote({ clef: this.fakeClefType, keys: this.notePosition, duration: `${sPickedNote.vfNotation}${sNoteSuffix}` }));
 
       const remainingBeats = getBeatsPerMeasure(sTimeSignature) - sPickedNote.normalizedDuration;
-      
+
       const match = getAllowedNotesFromTimeSignature(sTimeSignature).find(item => item.normalizedDuration === remainingBeats);
 
       if (match) {
@@ -103,7 +102,7 @@ class QuestionComponent extends Component {
   }
 
   componentDidMount() {
-    const { sTimeSignature, sAllowedNotes, sId, sNoteSuffix, sPickedNote } = this.state;
+    const { sTimeSignature, sId, sNoteSuffix, sPickedNote } = this.state;
 
     const noteContainer = document.createElement('div');
     // const refreshButton = document.createElement('i');
@@ -135,7 +134,7 @@ class QuestionComponent extends Component {
       // Add the note that will show up
     note.push(new Vex.Flow.StaveNote({ clef: this.fakeClefType, keys: this.notePosition, duration: `${sPickedNote.vfNotation}${sNoteSuffix}` }));
 
-      const remainingBeats = getBeatsPerMeasure(sTimeSignature) - sPickedNote.normalizedDuration;      
+      const remainingBeats = getBeatsPerMeasure(sTimeSignature) - sPickedNote.normalizedDuration;
       const match = getAllowedNotesFromTimeSignature(sTimeSignature).find(item => item.normalizedDuration === remainingBeats);
 
       if (match) {
@@ -162,7 +161,7 @@ class QuestionComponent extends Component {
   }
 
   handleClick(e) {
-    const { sAllowedMeters, sAllowedNotes } = this.state;
+    const { sAllowedMeters } = this.state;
     const { allowedNotes } = this.props;
     const timeSignature = getRandomTimeSignature(sAllowedMeters);
     //send onr time signature not an array.
