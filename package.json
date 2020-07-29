@@ -1,7 +1,7 @@
 {
-  "name": "mad-minute-music",
-  "version": "0.1.0",
-  "private": true,
+  "name": "music-minute",
+  "homepage": "https://kirkhansen.github.io/music-minute",
+  "version": "0.0.1",
   "dependencies": {
     "babel-eslint": "^10.0.1",
     "bootstrap": "^4.3.1",
@@ -20,7 +20,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -39,6 +41,7 @@
     "eslint-plugin-import": "^2.17.2",
     "eslint-plugin-jsx-a11y": "^6.2.1",
     "eslint-plugin-react": "^7.13.0",
+    "gh-pages": "^3.1.0",
     "node-sass": "^4.12.0",
     "prettier": "^1.17.1",
     "react-scripts": "3.4.1"
