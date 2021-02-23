@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Select from 'react-select';
 import cx from 'classnames';
-import QuestionComponent from '../../Components/QuestionComponent';
+import NoteValueQuestionComponent from '../../Components/NoteValueQuestionComponent';
 import ErrorBoundary from '../../Components/ErrorBoundary';
 import { NoteValues, KeySignatureOptions, NoteValueOptions} from '../../constants';
 import {getXRandomTimeSignaturesFromAllowed} from "../../utilities";
@@ -19,6 +19,8 @@ class NoteNameContainer extends Component {
       allowedNotes: NoteValues,
       allowedKeySignatures: null,
       keySignatures: [],
+      canRender: false,
+      hasNotes: false,
     };
 
     this.handleChangeOfAllowedValues = this.handleChangeOfAllowedValues.bind(this);
@@ -71,7 +73,6 @@ class NoteNameContainer extends Component {
   }
 
   handleKeySignatureChange(e) {
-    console.log(e);
     const keySignatures = [];
     for (let i = 0; i < e.length; i += 1) keySignatures.push(e[i].value);
     this.setState({
@@ -80,7 +81,6 @@ class NoteNameContainer extends Component {
   }
 
   handleChangeQuestionCount(e) {
-    console.log(e);
     this.setState({
       questionCount: +e.currentTarget.value,
     });
@@ -93,7 +93,7 @@ class NoteNameContainer extends Component {
       keySignatures,
       renderWorksheet,
       allowedNotes,
-      allowedMeters,
+      allowedKeySignatures,
       canRender,
     } = this.state;
     const buttonText = renderWorksheet ? 'Reset' : 'Render Worksheet';
@@ -179,6 +179,24 @@ class NoteNameContainer extends Component {
                   </fieldset>
                 </div>
               </div>
+              <div className="row">
+                <div className="col-12">
+                  <fieldset>
+                    <h4>Note Value Options</h4>
+                    <Select
+                      id="note-selection"
+                      onChange={this.handleChangeOfAllowedValues}
+                      isMulti
+                      isSearchable
+                      options={NoteValueOptions}
+                      placeholder="Select note type(s)."
+                    />
+                    <label className="sr-only" htmlFor="time-signatures">
+                      Selection of Note Values
+                    </label>
+                  </fieldset>
+                </div>
+              </div>
             </div>
           </div>
           <hr />
@@ -202,10 +220,10 @@ class NoteNameContainer extends Component {
             <div id="note-container-row" className="row">
               {keySignatures.map((time, index) => (
                 <ErrorBoundary>
-                  <QuestionComponent
+                  <NoteValueQuestionComponent
                     allowedNotes={allowedNotes}
                     timeSignature={time}
-                    allowedMeters={allowedMeters}
+                    allowedMeters={allowedKeySignatures}
                     noteTypes={questionTypes}
                     key={`ts-${index}`}
                     identifier={`ts-${index}`}

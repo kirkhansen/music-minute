@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Select from 'react-select';
 import cx from 'classnames';
-import QuestionComponent from '../../Components/QuestionComponent';
+import NoteValueQuestionComponent from '../../Components/NoteValueQuestionComponent';
 import ErrorBoundary from '../../Components/ErrorBoundary';
 import { NoteValues, TimeSignatureOptions, NoteValueOptions } from '../../constants';
 import { getXRandomTimeSignaturesFromAllowed, checkForCustomNotes } from '../../utilities';
@@ -218,7 +218,7 @@ class NoteValueContainer extends Component {
             <div id="note-container-row" className="row">
               {timeSigs.map((time, index) => (
                 <ErrorBoundary>
-                  <QuestionComponent
+                  <NoteValueQuestionComponent
                     allowedNotes={allowedNotes}
                     timeSignature={time}
                     allowedMeters={allowedMeters}

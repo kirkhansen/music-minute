@@ -5,37 +5,37 @@ import './QuestionComponent.scss';
 import {
   getBeatsPerMeasure,
   getNoteTypeForBeat,
-  getAllowedNotesFromTimeSignature,
-  getRandomTimeSignature,
-  getAllowedNotesFromTimeSignatureAndActiveNotes,
+  getAllowedNotesFromKeySignature,
+  getRandomKeySignature,
+  getAllowedNotesFromKeySignatureAndActiveNotes,
   getRandomFromAllowedNotes,
   finishMeasure,
   getNoteSuffix,
 } from '../utilities';
 
-class QuestionComponent extends Component {
+class NoteNameQuestionComponent extends Component {
   constructor(props) {
     super(props);
     console.log(this.props);
     const {allowedNotes, identifier, noteTypes} = props;
-    const timeSignature = getRandomTimeSignature(props.allowedMeters);
-    const noteChoices = getAllowedNotesFromTimeSignatureAndActiveNotes(timeSignature, allowedNotes);
+    const keySignature = getRandomKeySignature(props.allowedMeters);
+    const noteChoices = getAllowedNotesFromKeySignatureAndActiveNotes(keySignature, allowedNotes);
     const randomNote = getRandomFromAllowedNotes(noteChoices);
     let {allowedClefs} = props;
     // TODO: add a different function that just gets a random element from a list
     if (allowedClefs === undefined) {
       allowedClefs = ["percussion"]
     }
-    const clef = getRandomTimeSignature(allowedClefs)
+    const clef = getRandomKeySignature(allowedClefs)
 
 
     this.state = {
-      sTimeSignature : timeSignature,
+      sKeySignature : keySignature,
       sAllowedNotes :  noteChoices,
       sAllowedMeters: props.allowedMeters,
       sPickedNote : randomNote,
-      sNumberOfBeats : getBeatsPerMeasure(timeSignature),
-      sBeatValue : getNoteTypeForBeat(timeSignature),
+      sNumberOfBeats : getBeatsPerMeasure(keySignature),
+      sBeatValue : getNoteTypeForBeat(keySignature),
       sId : identifier,
       sNoteSuffix: getNoteSuffix(noteTypes),
       clef: clef,
@@ -56,7 +56,7 @@ class QuestionComponent extends Component {
   }
 
   drawQuestion = (noteContainer) => {
-    const {sTimeSignature, sPickedNote, sNoteSuffix, clef} = this.state;
+    const {sKeySignature, sPickedNote, sNoteSuffix, clef} = this.state;
 
     var renderer = new Vex.Flow.Renderer(noteContainer, Vex.Flow.Renderer.Backends.SVG);
     renderer.resize(150, 150);
@@ -65,34 +65,34 @@ class QuestionComponent extends Component {
     stave.setConfigForLines(this.lineConfig);
     stave
       .addClef(clef)
-      .addTimeSignature(sTimeSignature)
+      .addKeySignature(sTimeSignature)
       .setEndBarType(this.barType);
     var note = [];
-    if (getBeatsPerMeasure(sTimeSignature) - sPickedNote.normalizedDuration === 0) {
+    if (getBeatsPerMeasure(sKeySignature) - sPickedNote.normalizedDuration === 0) {
       note.push(new Vex.Flow.StaveNote({ clef: clef, keys: this.notePosition, duration: sPickedNote.vfNotation }));
     } else {
       // Add the note that will show up
     note.push(new Vex.Flow.StaveNote({ clef: clef, keys: this.notePosition, duration: `${sPickedNote.vfNotation}${sNoteSuffix}` }));
 
-      const remainingBeats = getBeatsPerMeasure(sTimeSignature) - sPickedNote.normalizedDuration;
-      const match = getAllowedNotesFromTimeSignature(sTimeSignature).find(item => item.normalizedDuration === remainingBeats);
+      const remainingBeats = getBeatsPerMeasure(sKeySignature) - sPickedNote.normalizedDuration;
+      const match = getAllowedNotesFromKeySignature(sTimeSignature).find(item => item.normalizedDuration === remainingBeats);
 
       if (match) {
         note.push(new Vex.Flow.GhostNote({ clef: clef, keys: this.notePosition, duration: match.vfNotation }));
       }
       else {
-        const remainingNotes = finishMeasure(remainingBeats, getAllowedNotesFromTimeSignature(sTimeSignature));
+        const remainingNotes = finishMeasure(remainingBeats, getAllowedNotesFromKeySignature(sTimeSignature));
         remainingNotes.forEach(index => {
           note.push(
-            new Vex.Flow.GhostNote({ clef: clef, keys: this.notePosition, duration:  getAllowedNotesFromTimeSignature(sTimeSignature)[index].vfNotation })
+            new Vex.Flow.GhostNote({ clef: clef, keys: this.notePosition, duration:  getAllowedNotesFromKeySignature(sTimeSignature)[index].vfNotation })
           );
         });
       }
     }
 
     var voice = new Vex.Flow.Voice({
-      num_beats: getBeatsPerMeasure(sTimeSignature),
-      beat_value: getNoteTypeForBeat(sTimeSignature),
+      num_beats: getBeatsPerMeasure(sKeySignature),
+      beat_value: getNoteTypeForBeat(sKeySignature),
     });
     voice.addTickables(note);
     new Vex.Flow.Formatter().joinVoices([voice]).format([voice], 120);
@@ -125,18 +125,18 @@ class QuestionComponent extends Component {
   handleClick(e) {
     const { sAllowedMeters } = this.state;
     const { allowedNotes } = this.props;
-    const timeSignature = getRandomTimeSignature(sAllowedMeters);
+    const keySignature = getRandomKeySignature(sAllowedMeters);
     //send onr time signature not an array.
     // should we reset allowed notes?
-    const noteChoices = getAllowedNotesFromTimeSignatureAndActiveNotes(timeSignature, allowedNotes);
+    const noteChoices = getAllowedNotesFromKeySignatureAndActiveNotes(keySignature, allowedNotes);
     const randomNote = getRandomFromAllowedNotes(noteChoices);
 
     this.setState({
-      sTimeSignature: timeSignature,
+      sKeySignature: keySignature,
       sAllowedNotes: noteChoices,
       sPickedNote: randomNote,
-      sNumberOfBeats : getBeatsPerMeasure(timeSignature),
-      sBeatValue : getNoteTypeForBeat(timeSignature),
+      sNumberOfBeats : getBeatsPerMeasure(keySignature),
+      sBeatValue : getNoteTypeForBeat(keySignature),
     })
 
   }
@@ -151,4 +151,4 @@ class QuestionComponent extends Component {
   }
 }
 
-export default QuestionComponent;
+export default NoteNameQuestionComponent;
