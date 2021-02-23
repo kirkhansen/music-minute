@@ -179,14 +179,14 @@ function getNoteSuffix(type) {
 
 function checkForCustomNotes(allowedNotes) {
     const allowedNotesArray = Object.values(allowedNotes);
-    
+
     return allowedNotesArray.find(note => note.active === true);
 }
 
 export {
-    getBeatsPerMeasure, 
-    getNoteValuesFromTimeSignature, 
-    getNoteTypeForBeat, 
+    getBeatsPerMeasure,
+    getNoteValuesFromTimeSignature,
+    getNoteTypeForBeat,
     getAllowedNotesFromTimeSignature,
     getRandomTimeSignature,
     getRandomFromAllowedNotes,

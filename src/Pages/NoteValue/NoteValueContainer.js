@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 import Select from 'react-select';
 import cx from 'classnames';
-import QuestionComponent from '../../Components/QuestionComponent';
+import NoteValueQuestionComponent from '../../Components/NoteValueQuestionComponent';
 import ErrorBoundary from '../../Components/ErrorBoundary';
 import { NoteValues, TimeSignatureOptions, NoteValueOptions } from '../../constants';
 import { getXRandomTimeSignaturesFromAllowed, checkForCustomNotes } from '../../utilities';
 import DefaultTemplate from '../Templates/DefaultTemplate';
-import './MMMContainer.scss';
+import './NoteValueContainer.scss';
 
-class MMMContainer extends Component {
+class NoteValueContainer extends Component {
   constructor(props) {
     const questionCount = 20;
     super(props);
@@ -218,7 +218,7 @@ class MMMContainer extends Component {
             <div id="note-container-row" className="row">
               {timeSigs.map((time, index) => (
                 <ErrorBoundary>
-                  <QuestionComponent
+                  <NoteValueQuestionComponent
                     allowedNotes={allowedNotes}
                     timeSignature={time}
                     allowedMeters={allowedMeters}
@@ -236,4 +236,4 @@ class MMMContainer extends Component {
   }
 }
 
-export default MMMContainer;
+export default NoteValueContainer;
